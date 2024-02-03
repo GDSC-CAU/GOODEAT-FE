@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 
 class NativeLanguageSelect extends StatefulWidget {
   const NativeLanguageSelect({super.key});
@@ -14,6 +16,9 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
 
   List<String> countries = ['대한민국', '미국', '일본', '중국', '영국']; //test code
   List<String> currencies = ['원', '달러', '엔', '위안', '파운드']; //test code
+
+  //컨트롤러
+  final controller = Get.put(MyCountryCurrencyController());
 
   void _showCurrencySelection(
     BuildContext context,
@@ -68,6 +73,9 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
     const FlutterSecureStorage secureStorage = FlutterSecureStorage();
     secureStorage.write(key: 'country', value: selectedCountry);
     secureStorage.write(key: 'currency', value: selectedCurrency);
+
+    //controller를 통해 저장
+    controller.modify(selectedCountry, selectedCurrency);
   }
 
   @override
