@@ -5,7 +5,8 @@ import 'package:goodeat_frontend/controller/my_country_currency_controller.dart'
 import 'package:goodeat_frontend/pages/home_page.dart';
 
 class NativeLanguageSelect extends StatefulWidget {
-  const NativeLanguageSelect({super.key});
+  const NativeLanguageSelect({super.key, required this.fromHomeScreen});
+  final bool fromHomeScreen;
 
   @override
   State<NativeLanguageSelect> createState() => _NativeLanguageSelect1State();
@@ -36,7 +37,7 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
                     setState(() {
                       selectedCountry = country;
                     });
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
               )
@@ -59,7 +60,7 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
                     setState(() {
                       selectedCurrency = currency;
                     });
-                    Navigator.pop(context);
+                    Get.back();
                   },
                 ),
               )
@@ -78,7 +79,13 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
     //controller를 통해 저장
     controller.modify(selectedCountry, selectedCurrency);
 
-    Get.off(() => const HomePage());
+    if (widget.fromHomeScreen) {
+      //홈페이지에서 push하여 재설정일 경우
+      Get.back();
+    } else {
+      //처음 들어온 경우
+      Get.off(() => const HomePage());
+    }
   }
 
   @override
