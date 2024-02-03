@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
+import 'package:goodeat_frontend/pages/home_page.dart';
 
 class NativeLanguageSelect extends StatefulWidget {
   const NativeLanguageSelect({super.key});
@@ -76,6 +77,8 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
 
     //controller를 통해 저장
     controller.modify(selectedCountry, selectedCurrency);
+
+    Get.off(() => const HomePage());
   }
 
   @override
