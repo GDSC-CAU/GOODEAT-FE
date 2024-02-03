@@ -22,6 +22,14 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
   //컨트롤러
   final controller = Get.put(MyCountryCurrencyController());
 
+  @override
+  void initState() {
+    super.initState();
+    // _myCountry와 _myCurrency를 초기화
+    selectedCountry = controller.myCounty;
+    selectedCurrency = controller.myCurrency;
+  }
+
   void _showCurrencySelection(
     BuildContext context,
   ) {
