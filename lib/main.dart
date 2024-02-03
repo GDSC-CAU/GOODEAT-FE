@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goodeat_frontend/Pages/native_lang_select_page.dart';
 
 void main() {
   runApp(const GoodEat());
@@ -16,23 +17,7 @@ class GoodEat extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
       // ),
-      home: NativeLanguageSelect1(),
-    );
-  }
-}
-
-class NativeLanguageSelect1 extends StatefulWidget {
-  const NativeLanguageSelect1({super.key});
-
-  @override
-  State<NativeLanguageSelect1> createState() => _NativeLanguageSelect1State();
-}
-
-class _NativeLanguageSelect1State extends State<NativeLanguageSelect1> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(),
+      home: NativeLanguageSelect(),
     );
   }
 }
