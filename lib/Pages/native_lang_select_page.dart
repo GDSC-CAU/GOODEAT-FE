@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class NativeLanguageSelect extends StatefulWidget {
   const NativeLanguageSelect({super.key});
@@ -62,11 +63,19 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
     );
   }
 
+  void _submitCountryAndCurrency(BuildContext context) {
+    //기기 DB에 저장
+    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
+    secureStorage.write(key: 'country', value: selectedCountry);
+    secureStorage.write(key: 'currency', value: selectedCurrency);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () => _showCurrencySelection(context),
@@ -77,6 +86,10 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
               onPressed: () => _showCurrencyPicker(context),
               child: Text('선택된 화폐: $selectedCurrency'),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                onPressed: () => _submitCountryAndCurrency(context),
+                child: const Text('Next')),
           ],
         ),
       ),
