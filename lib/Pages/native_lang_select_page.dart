@@ -32,9 +32,7 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
     selectedCurrency = controller.myCurrency;
   }
 
-  void _showCurrencySelection(
-    BuildContext context,
-  ) {
+  void _showCurrencySelection(BuildContext context) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -101,6 +99,9 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
