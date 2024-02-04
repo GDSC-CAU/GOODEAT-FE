@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
+import 'package:goodeat_frontend/pages/home_page.dart';
 import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
 
 void main() {
@@ -9,7 +12,6 @@ void main() {
 class GoodEat extends StatelessWidget {
   const GoodEat({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const GetMaterialApp(
@@ -18,7 +20,55 @@ class GoodEat extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
       // ),
-      home: NativeLanguageSelect(fromHomeScreen: false),
+      home: CheckStorage(),
+    );
+  }
+}
+
+class CheckStorage extends StatefulWidget {
+  const CheckStorage({Key? key}) : super(key: key);
+
+  @override
+  CheckStorageState createState() => CheckStorageState();
+}
+
+class CheckStorageState extends State<CheckStorage> {
+  late FlutterSecureStorage secureStorage;
+
+  @override
+  void initState() {
+    super.initState();
+    secureStorage = const FlutterSecureStorage();
+    _checkAndNavigate();
+  }
+
+  @override
+  void dispose() {
+    MyCountryCurrencyController().dispose();
+    super.dispose();
+  }
+
+  Future<void> _checkAndNavigate() async {
+    String? myCountry = await secureStorage.read(key: 'country');
+    String? myCurrency = await secureStorage.read(key: 'currency');
+
+    if (myCountry != null && myCurrency != null) {
+      //이미 정보가 있다면
+      final controller = Get.put(MyCountryCurrencyController());
+      controller.modify(myCountry, myCurrency);
+
+      Get.off(() => const HomePage());
+    } else {
+      Get.off(() => const NativeLanguageSelect(fromHomeScreen: false));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Text('hello'),
+      ),
     );
   }
 }

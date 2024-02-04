@@ -22,6 +22,8 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
   //컨트롤러
   final controller = Get.put(MyCountryCurrencyController());
 
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
   @override
   void initState() {
     super.initState();
@@ -78,11 +80,11 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
     );
   }
 
-  void _submitCountryAndCurrency(BuildContext context) {
+  void _submitCountryAndCurrency(BuildContext context) async {
     //기기 DB에 저장
-    const FlutterSecureStorage secureStorage = FlutterSecureStorage();
-    secureStorage.write(key: 'country', value: selectedCountry);
-    secureStorage.write(key: 'currency', value: selectedCurrency);
+
+    await secureStorage.write(key: 'country', value: selectedCountry);
+    await secureStorage.write(key: 'currency', value: selectedCurrency);
 
     //controller를 통해 저장
     controller.modify(selectedCountry, selectedCurrency);
@@ -114,7 +116,7 @@ class _NativeLanguageSelect1State extends State<NativeLanguageSelect> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-                onPressed: () => _submitCountryAndCurrency(context),
+                onPressed: () async => _submitCountryAndCurrency(context),
                 child: const Text('Next')),
           ],
         ),
