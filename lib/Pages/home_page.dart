@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
 
@@ -31,6 +32,10 @@ class _HomePageState extends State<HomePage> {
             ElevatedButton(
               onPressed: () => Get.to(
                   () => const NativeLanguageSelect(fromHomeScreen: true)),
+              child: const Text('본인 언어/화폐 설정'),
+            ),
+            ElevatedButton(
+              onPressed: () => Get.to(() => const TravelLanguageSelectPage()),
               child: const Text('여행지 설정'),
             ),
           ],
