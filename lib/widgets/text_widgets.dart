@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AppBarText extends StatelessWidget {
+class AppBarText extends Text {
   final String text;
-  const AppBarText({super.key, required this.text});
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(fontSize: 16),
-    );
-  }
+  const AppBarText({
+    Key? key,
+    required this.text,
+  }) : super(key: key, text, style: const TextStyle(fontSize: 16));
 }
 
-class HeadingText extends StatelessWidget {
+class HeadingText extends Text {
   final String text;
-  const HeadingText({super.key, required this.text});
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(fontSize: 36),
-    );
-  }
+  const HeadingText({
+    Key? key,
+    required this.text,
+  }) : super(key: key, text, style: const TextStyle(fontSize: 36));
 }
