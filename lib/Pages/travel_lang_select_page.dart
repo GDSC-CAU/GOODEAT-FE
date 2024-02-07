@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/travel_model.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
@@ -17,6 +19,31 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
     TravelModel(travel: 'Vietnam', flagImage: 'Vietnam.png'),
     TravelModel(travel: 'Korea', flagImage: 'Korea.png'),
   ];
+
+  //컨트롤러
+  final controller = Get.put(TravelController());
+
+  ListView makeTravelList(List<TravelModel> travelList) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemCount: travelList.length,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          child: TravelWidget(
+            travel: travelList[index].travel,
+            flagImage: travelList[index].flagImage,
+          ),
+          onTap: () {
+            controller.modify(travelList[index].travel);
+            Get.back();
+          },
+        );
+      },
+      separatorBuilder: (context, index) => const SizedBox(width: 40),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,19 +62,4 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
       ),
     );
   }
-}
-
-ListView makeTravelList(List<TravelModel> travelList) {
-  return ListView.separated(
-    scrollDirection: Axis.horizontal,
-    itemCount: travelList.length,
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-    itemBuilder: (context, index) {
-      return TravelWidget(
-        travel: travelList[index].travel,
-        flagImage: travelList[index].flagImage,
-      );
-    },
-    separatorBuilder: (context, index) => const SizedBox(width: 40),
-  );
 }
