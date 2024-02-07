@@ -15,5 +15,8 @@ class HeadingText extends Text {
   const HeadingText({
     Key? key,
     required this.text,
-  }) : super(key: key, text, style: const TextStyle(fontSize: 36));
+  }) : super(
+            key: key,
+            text,
+            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold));
 }
