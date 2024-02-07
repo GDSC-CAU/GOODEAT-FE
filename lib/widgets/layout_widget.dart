@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class PaddingWidget extends StatelessWidget {
-  const PaddingWidget({super.key});
+class MyPadding extends Padding {
+  final double paddingValue;
 
-  @override
-  Widget build(BuildContext context) {
-    return const Padding(padding: EdgeInsets.all(8.0));
-  }
+  MyPadding({
+    Key? key,
+    required Widget child,
+    this.paddingValue = 8.0,
+  }) : super(
+          key: key,
+          padding: EdgeInsets.all(paddingValue),
+          child: child,
+        );
 }
