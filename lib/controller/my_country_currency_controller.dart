@@ -4,11 +4,11 @@ class MyCountryCurrencyController extends GetxController {
   String _myCountry = '대한민국';
   String _myCurrency = '원';
 
-  get myCounty => _myCountry;
+  get myCountry => _myCountry;
   get myCurrency => _myCurrency;
 
-  void modify(String myCounty, String myCurrency) {
-    _myCountry = myCounty;
+  void modify(String myCountry, String myCurrency) {
+    _myCountry = myCountry;
     _myCurrency = myCurrency;
     update();
   }

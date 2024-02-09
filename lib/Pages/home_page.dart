@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (myController) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(myController.myCounty),
+                    Text(myController.myCountry),
                     Text(myController.myCurrency),
                   ],
                 ),

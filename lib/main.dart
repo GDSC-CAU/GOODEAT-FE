@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
 import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: 'assets/config/.env');
   runApp(const GoodEat());
 }
 
