@@ -50,6 +50,9 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () => Get.to(() => const TravelLanguageSelectPage()),
                 child: const Text('여행지 설정'),
               ),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.camera_alt_outlined)),
             ],
           ),
         ),
