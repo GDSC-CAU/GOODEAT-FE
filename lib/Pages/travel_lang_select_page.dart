@@ -16,8 +16,16 @@ class TravelLanguageSelectPage extends StatefulWidget {
 
 class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
   final List<TravelModel> travelList = [
-    TravelModel(travel: 'Vietnam', flagImage: 'Vietnam.png'),
-    TravelModel(travel: 'Korea', flagImage: 'Korea.png'),
+    TravelModel(
+        travel: 'Vietnam',
+        flagImage: 'Vietnam.png',
+        travelLanguage: 'Vietnamese',
+        travelCurrency: 'Vietnamese dong'),
+    TravelModel(
+        travel: 'Korea',
+        flagImage: 'Korea.png',
+        travelLanguage: 'Korean',
+        travelCurrency: 'South Korean won'),
   ];
 
   //컨트롤러
@@ -35,7 +43,10 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
             flagImage: travelList[index].flagImage,
           ),
           onTap: () {
-            controller.modify(travelList[index].travel);
+            controller.modify(
+                travelList[index].travel,
+                travelList[index].travelLanguage,
+                travelList[index].travelCurrency);
             Get.back();
           },
         );
