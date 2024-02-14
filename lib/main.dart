@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
+import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
 import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
 
@@ -53,11 +54,18 @@ class CheckStorageState extends State<CheckStorage> {
   Future<void> _checkAndNavigate() async {
     String? myCountry = await secureStorage.read(key: 'country');
     String? myCurrency = await secureStorage.read(key: 'currency');
+    String? travel = await secureStorage.read(key: 'travel');
+    String? travelLanguage = await secureStorage.read(key: 'travelLanguage');
+    String? travelCurrency = await secureStorage.read(key: 'travelCurrency');
 
     if (myCountry != null && myCurrency != null) {
       //이미 정보가 있다면
       final controller = Get.put(MyCountryCurrencyController());
       controller.modify(myCountry, myCurrency);
+      if (travel != null) {
+        final travelController = Get.put(TravelController());
+        travelController.modify(travel, travelLanguage!, travelCurrency!);
+      }
 
       Get.off(() => const HomePage());
     } else {

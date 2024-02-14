@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/travel_model.dart';
@@ -30,6 +31,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
 
   //컨트롤러
   final controller = Get.put(TravelController());
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   ListView makeTravelList(List<TravelModel> travelList) {
     return ListView.separated(
@@ -42,7 +44,15 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
             travel: travelList[index].travel,
             flagImage: travelList[index].flagImage,
           ),
-          onTap: () {
+          onTap: () async {
+            //기기 DB에 저장
+            await secureStorage.write(
+                key: 'travel', value: travelList[index].travel);
+            await secureStorage.write(
+                key: 'travelLanguage', value: travelList[index].travelLanguage);
+            await secureStorage.write(
+                key: 'travelCurrency', value: travelList[index].travelCurrency);
+
             controller.modify(
                 travelList[index].travel,
                 travelList[index].travelLanguage,
