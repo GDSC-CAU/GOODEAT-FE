@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/menu_board_page.dart';
@@ -28,7 +30,9 @@ class _HomePageState extends State<HomePage> {
 
     if (photo != null) {
       //사진을 찍었다면
-      Get.to(const MenuBoardPage());
+      List<int> imageBytes = await photo.readAsBytes();
+      String base64EncodedImage = base64Encode(imageBytes);
+      Get.to(() => MenuBoardPage(base64EncodedImage: base64EncodedImage));
     }
   }
 
