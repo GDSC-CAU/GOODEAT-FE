@@ -26,13 +26,17 @@ class _HomePageState extends State<HomePage> {
   final picker = ImagePicker();
 
   Future getImage() async {
-    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (secondController.travel == 'null') {
+      //아직 여행지 설정을 하지 않았다면
+    } else {
+      final XFile? photo = await picker.pickImage(source: ImageSource.camera);
 
-    if (photo != null) {
-      //사진을 찍었다면
-      List<int> imageBytes = await photo.readAsBytes();
-      String base64EncodedImage = base64Encode(imageBytes);
-      Get.to(() => MenuBoardPage(base64EncodedImage: base64EncodedImage));
+      if (photo != null) {
+        //사진을 찍었다면
+        List<int> imageBytes = await photo.readAsBytes();
+        String base64EncodedImage = base64Encode(imageBytes);
+        Get.to(() => MenuBoardPage(base64EncodedImage: base64EncodedImage));
+      }
     }
   }
 
