@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/menu_info_page.dart';
+import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
+import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
@@ -15,15 +19,19 @@ class MenuBoardPage extends StatefulWidget {
 
 class _MenuBoardPageState extends State<MenuBoardPage> {
   late Future<List<MenuModel>> menuList;
+  late MyCountryCurrencyController myCountryCurrencyController;
+  late TravelController travelController;
 
   @override
   void initState() {
     super.initState();
+    myCountryCurrencyController = Get.put(MyCountryCurrencyController());
+    travelController = Get.put(TravelController());
     menuList = ApiService.postPictureAndGetMenu(
-        originLanguageName: 'Vietnamese',
-        userLanguageName: 'Korean',
-        originCurrencyName: 'Vietnamese dong',
-        userCurrencyName: 'South Korean won',
+        originLanguageName: travelController.travelLanguage,
+        userLanguageName: myCountryCurrencyController.myCountry,
+        originCurrencyName: travelController.travelCurrency,
+        userCurrencyName: myCountryCurrencyController.myCurrency,
         base64EncodedImage: widget.base64EncodedImage);
   }
 
@@ -72,7 +80,9 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
       ),
       itemCount: menuList.length,
       itemBuilder: (BuildContext context, int index) {
-        return MenuWidget(menu: menuList[index]);
+        return GestureDetector(
+            onTap: () => Get.to(MenuInfoPage(menu: menuList[index])),
+            child: MenuWidget(menu: menuList[index]));
       },
     );
   }
