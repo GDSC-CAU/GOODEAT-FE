@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
@@ -12,6 +13,13 @@ class MenuInfoPage extends StatefulWidget {
 }
 
 class _MenuInfoPageState extends State<MenuInfoPage> {
+  int quantity = 0;
+
+  bool isZero() {
+    if (quantity > 0) return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,13 +78,52 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                     ),
                     const SizedBox(height: 10),
                     //Quantity 파트
-                    const Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 24),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          MainText(text: 'Quantity'),
+                          const MainText(text: 'Quantity'),
+                          //수량 선택 위젯
+                          Container(
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                    width: 2, color: Color(0xFF9AA5B6)),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    if (!isZero()) {
+                                      setState(() {
+                                        quantity -= 1;
+                                      });
+                                    }
+                                  },
+                                  icon: SvgPicture.asset(
+                                      'assets/images/icons/minus.svg'),
+                                  iconSize: 20,
+                                ),
+                                CaptionText(text: '$quantity'),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      quantity += 1;
+                                    });
+                                  },
+                                  icon: SvgPicture.asset(
+                                      'assets/images/icons/plus.svg'),
+                                  iconSize: 20,
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
