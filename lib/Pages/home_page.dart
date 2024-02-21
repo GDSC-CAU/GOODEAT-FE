@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final picker = ImagePicker();
 
   Future getImage() async {
-    if (secondController.travel == 'null') {
+    if (secondController.travelLanguage == 'null') {
       //아직 여행지 설정을 하지 않았다면
     } else {
       final XFile? photo = await picker.pickImage(source: ImageSource.camera);
@@ -61,7 +61,8 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 30),
               GetBuilder<TravelController>(
-                builder: (travelController) => Text(travelController.travel),
+                builder: (travelController) =>
+                    Text(travelController.travelLanguage),
               ),
               ElevatedButton(
                 onPressed: () => Get.to(

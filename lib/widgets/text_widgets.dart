@@ -14,7 +14,7 @@ class HeadingText extends Text {
           style: GoogleFonts.inter(
             fontSize: 32,
             fontWeight: FontWeight.w700,
-            color: color,
+            color: color ?? AppColor.primary,
           ),
         );
 }
@@ -29,7 +29,9 @@ class HeadingSmallText extends Text {
             key: key,
             text,
             style: GoogleFonts.inter(
-                fontSize: 24, fontWeight: FontWeight.w700, color: color));
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                color: color ?? AppColor.primary));
 }
 
 class BodyText extends Text {
@@ -42,7 +44,9 @@ class BodyText extends Text {
             key: key,
             text,
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.normal, color: color));
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                color: color ?? AppColor.primary));
 }
 
 class BodySemiText extends Text {
@@ -54,7 +58,9 @@ class BodySemiText extends Text {
             key: key,
             text,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w600, color: color));
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: color ?? AppColor.primary));
 }
 
 class BodySmallText extends Text {
@@ -66,7 +72,9 @@ class BodySmallText extends Text {
             key: key,
             text,
             style: TextStyle(
-                fontSize: 14, fontWeight: FontWeight.normal, color: color));
+                fontSize: 14,
+                fontWeight: FontWeight.normal,
+                color: color ?? AppColor.primary));
 }
 
 class BodySemiSmallText extends Text {
@@ -78,5 +86,7 @@ class BodySemiSmallText extends Text {
             key: key,
             text,
             style: TextStyle(
-                fontSize: 19, fontWeight: FontWeight.w600, color: color));
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: color ?? AppColor.primary));
 }

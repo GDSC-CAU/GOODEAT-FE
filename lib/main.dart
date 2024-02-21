@@ -54,7 +54,6 @@ class CheckStorageState extends State<CheckStorage> {
   Future<void> _checkAndNavigate() async {
     String? myCountry = await secureStorage.read(key: 'country');
     String? myCurrency = await secureStorage.read(key: 'currency');
-    String? travel = await secureStorage.read(key: 'travel');
     String? travelLanguage = await secureStorage.read(key: 'travelLanguage');
     String? travelCurrency = await secureStorage.read(key: 'travelCurrency');
 
@@ -62,9 +61,9 @@ class CheckStorageState extends State<CheckStorage> {
       //이미 정보가 있다면
       final controller = Get.put(MyCountryCurrencyController());
       controller.modify(myCountry, myCurrency);
-      if (travel != null) {
+      if (travelLanguage != null) {
         final travelController = Get.put(TravelController());
-        travelController.modify(travel, travelLanguage!, travelCurrency!);
+        travelController.modify(travelLanguage, travelCurrency!);
       }
 
       Get.off(() => const HomePage());

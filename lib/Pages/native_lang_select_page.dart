@@ -22,8 +22,8 @@ class NativeLanguageSelect extends StatefulWidget {
 }
 
 class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
-  String selectedCountry = 'English'; //test code
-  String selectedCurrency = 'United States Dollar'; // test code
+  late String selectedCountry;
+  late String selectedCurrency;
   late Future<List<NativeModel>> countries;
   late Future<List<CurrencyModel>> currencies;
 
@@ -40,7 +40,7 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
     super.initState();
     countries = ApiService.getLanguages();
     currencies = ApiService.getCurrencies();
-    // _myCountry와 _myCurrency를 초기화
+    // myCountry와 myCurrency로 초기화
     selectedCountry = controller.myCountry;
     selectedCurrency = controller.myCurrency;
   }
@@ -232,7 +232,10 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
         ),
       ),
       floatingActionButton: GestureDetector(
-        onTap: () => Get.back(),
+        onTap: () {
+          _submitCountryAndCurrency(context);
+          Get.back();
+        },
         child: const ButtomButtonWidget(
           labelText: 'Complete Setting',
         ),

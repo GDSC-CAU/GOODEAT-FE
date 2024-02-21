@@ -1,16 +1,13 @@
 import 'package:get/get.dart';
 
 class TravelController extends GetxController {
-  String _travel = 'null';
-  String _travelLanguage = 'null';
-  String _travelCurrency = 'null';
+  String _travelLanguage = 'Korean';
+  String _travelCurrency = 'South Korean won';
 
-  get travel => _travel;
   get travelLanguage => _travelLanguage;
   get travelCurrency => _travelCurrency;
 
-  void modify(String travel, String travelLanguage, String travelCurrency) {
-    _travel = travel;
+  void modify(String travelLanguage, String travelCurrency) {
     _travelLanguage = travelLanguage;
     _travelCurrency = travelCurrency;
     update();

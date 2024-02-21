@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
-import 'package:goodeat_frontend/models/travel_model.dart';
+import 'package:goodeat_frontend/models/currency_model.dart';
+import 'package:goodeat_frontend/models/native_model.dart';
+import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/style.dart';
+import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
+import 'package:goodeat_frontend/widgets/select_button.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
-import 'package:goodeat_frontend/widgets/travel_widget.dart';
 
 class TravelLanguageSelectPage extends StatefulWidget {
   const TravelLanguageSelectPage({super.key});
@@ -16,71 +21,219 @@ class TravelLanguageSelectPage extends StatefulWidget {
 }
 
 class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
-  final List<TravelModel> travelList = [
-    TravelModel(
-        travel: 'Vietnam',
-        flagImage: 'Vietnam.png',
-        travelLanguage: 'Vietnamese',
-        travelCurrency: 'Vietnamese dong'),
-    TravelModel(
-        travel: 'Korea',
-        flagImage: 'Korea.png',
-        travelLanguage: 'Korean',
-        travelCurrency: 'South Korean won'),
-  ];
+  late String selectedCountry;
+  late String selectedCurrency;
+  late Future<List<NativeModel>> countries;
+  late Future<List<CurrencyModel>> currencies;
 
   //컨트롤러
   final controller = Get.put(TravelController());
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
-  ListView makeTravelList(List<TravelModel> travelList) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: travelList.length,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          child: TravelWidget(
-            travel: travelList[index].travel,
-            flagImage: travelList[index].flagImage,
-          ),
-          onTap: () async {
-            //기기 DB에 저장
-            await secureStorage.write(
-                key: 'travel', value: travelList[index].travel);
-            await secureStorage.write(
-                key: 'travelLanguage', value: travelList[index].travelLanguage);
-            await secureStorage.write(
-                key: 'travelCurrency', value: travelList[index].travelCurrency);
+  TextEditingController searchLanguageController = TextEditingController();
+  TextEditingController searchCurrencyController = TextEditingController();
 
-            controller.modify(
-                travelList[index].travel,
-                travelList[index].travelLanguage,
-                travelList[index].travelCurrency);
-            Get.back();
+  @override
+  void initState() {
+    super.initState();
+    countries = ApiService.getLanguages();
+    currencies = ApiService.getCurrencies();
+    // travelLanguage와 travelCurrency를 초기화
+    selectedCountry = controller.travelLanguage;
+    selectedCurrency = controller.travelCurrency;
+  }
+
+  void _showCountrySelection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return FutureBuilder<List<NativeModel>>(
+          future: countries,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('No data available');
+            } else {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: searchLanguageController,
+                      decoration: const InputDecoration(
+                        labelText: 'Search Country',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        // 검색어 입력 시 setState를 호출하여 화면을 다시 그리도록 함
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var country = snapshot.data![index];
+                        // 검색어로 필터링
+                        if (country.native.toLowerCase().contains(
+                            searchLanguageController.text.toLowerCase())) {
+                          return ListTile(
+                            title: Text(country.native),
+                            onTap: () {
+                              setState(() {
+                                selectedCountry = country.native;
+                              });
+                              Get.back();
+                            },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              );
+            }
           },
         );
       },
-      separatorBuilder: (context, index) => const SizedBox(width: 40),
     );
+  }
+
+  void _showCurrencySelection(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return FutureBuilder<List<CurrencyModel>>(
+          future: currencies,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('No data available');
+            } else {
+              return Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: searchCurrencyController,
+                    decoration: const InputDecoration(
+                      labelText: 'Search Currency',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var currency = snapshot.data![index];
+                      // 검색어로 필터링
+                      if (currency.currency.toLowerCase().contains(
+                          searchCurrencyController.text.toLowerCase())) {
+                        return ListTile(
+                          title: Text(currency.currency),
+                          onTap: () {
+                            setState(() {
+                              selectedCurrency = currency.currency;
+                            });
+                            Get.back();
+                          },
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
+                ),
+              ]);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  void _submitCountryAndCurrency(BuildContext context) async {
+    //기기 DB에 저장
+
+    await secureStorage.write(key: 'travelLanguage', value: selectedCountry);
+    await secureStorage.write(key: 'travelCurrency', value: selectedCurrency);
+
+    //controller를 통해 저장
+    controller.modify(selectedCountry, selectedCurrency);
+
+    Get.back();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BodySemiText(text: 'Profile Setting'),
+        title: BodySemiText(text: 'Place to Visit'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
       body: MyPadding(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadingText(text: 'Where to visit?'),
-            const Text('Click a image below that you are planning to visit'),
-            Expanded(child: makeTravelList(travelList)),
+            HeadingText(
+              text: 'Where to visit?',
+              color: AppColor.primary,
+            ),
+            BodyText(text: 'Select your language and currency unit'),
+            BodySemiText(text: 'that you are planning to visit'),
+            const SizedBox(height: 30),
+
+            //언어 선택
+            BodySmallText(text: 'Language select'),
+            const SizedBox(height: 7),
+            GestureDetector(
+              onTap: () => _showCountrySelection(context),
+              child: SelectButtonWidget(
+                  labelText: selectedCountry,
+                  textColor: AppColor.primary,
+                  backgroundColor: AppColor.white),
+            ),
+
+            const SizedBox(height: 20),
+
+            //화폐 선택
+            BodySmallText(text: 'Currency select'),
+            const SizedBox(height: 7),
+            GestureDetector(
+              onTap: () => _showCurrencySelection(context),
+              child: SelectButtonWidget(
+                  labelText: selectedCurrency,
+                  textColor: AppColor.primary,
+                  backgroundColor: AppColor.white),
+            ),
           ],
         ),
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          _submitCountryAndCurrency(context);
+          Get.back();
+        },
+        child: const ButtomButtonWidget(
+          labelText: 'Complete Setting',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
