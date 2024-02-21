@@ -17,17 +17,17 @@ class NativeLanguageSelect extends StatefulWidget {
 
 class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
   String selectedCountry = 'English'; //test code
-  String selectedCurrency = '원'; // test code
-
-  //List<String> countries = ['대한민국', '미국', '일본', '중국', '영국']; //test code
+  String selectedCurrency = 'United States Dollar'; // test code
   late Future<List<NativeModel>> countries;
-  //List<String> currencies = ['원', '달러', '엔', '위안', '파운드']; //test code
   late Future<List<CurrencyModel>> currencies;
 
   //컨트롤러
   final controller = Get.put(MyCountryCurrencyController());
 
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+
+  TextEditingController searchLanguageController = TextEditingController();
+  TextEditingController searchCurrencyController = TextEditingController();
 
   @override
   void initState() {
@@ -53,22 +53,46 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Text('No data available');
             } else {
-              return SingleChildScrollView(
-                child: Column(
-                  children: snapshot.data!
-                      .map(
-                        (country) => ListTile(
-                          title: Text(country.native),
-                          onTap: () {
-                            setState(() {
-                              selectedCountry = country.native;
-                            });
-                            Get.back();
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: searchLanguageController,
+                      decoration: const InputDecoration(
+                        labelText: 'Search Country',
+                        border: OutlineInputBorder(),
+                      ),
+                      onChanged: (value) {
+                        // 검색어 입력 시 setState를 호출하여 화면을 다시 그리도록 함
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        var country = snapshot.data![index];
+                        // 검색어로 필터링
+                        if (country.native.toLowerCase().contains(
+                            searchLanguageController.text.toLowerCase())) {
+                          return ListTile(
+                            title: Text(country.native),
+                            onTap: () {
+                              setState(() {
+                                selectedCountry = country.native;
+                              });
+                              Get.back();
+                            },
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                ],
               );
             }
           },
@@ -91,11 +115,29 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return const Text('No data available');
             } else {
-              return SingleChildScrollView(
-                child: Column(
-                  children: snapshot.data!
-                      .map(
-                        (currency) => ListTile(
+              return Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: searchCurrencyController,
+                    decoration: const InputDecoration(
+                      labelText: 'Search Currency',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var currency = snapshot.data![index];
+                      // 검색어로 필터링
+                      if (currency.currency.toLowerCase().contains(
+                          searchCurrencyController.text.toLowerCase())) {
+                        return ListTile(
                           title: Text(currency.currency),
                           onTap: () {
                             setState(() {
@@ -103,11 +145,14 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
                             });
                             Get.back();
                           },
-                        ),
-                      )
-                      .toList(),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    },
+                  ),
                 ),
-              );
+              ]);
             }
           },
         );
