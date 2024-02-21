@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
@@ -11,7 +12,8 @@ class ButtomButtonWidget extends StatelessWidget {
       {super.key,
       required this.labelText,
       Color? textColor,
-      Color? backgroundColor})
+      Color? backgroundColor,
+      SvgPicture? icon})
       : textColor = textColor ?? AppColor.white,
         backgroundColor = backgroundColor ?? AppColor.primary;
 

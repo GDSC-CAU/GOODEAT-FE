@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/menu_info_page.dart';
 import 'package:goodeat_frontend/Pages/order_list_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
+import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
@@ -23,6 +24,8 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
   late Future<List<MenuModel>> menuList;
   late MyCountryCurrencyController myCountryCurrencyController;
   late TravelController travelController;
+  OrderListController orderListController =
+      Get.put(OrderListController(), permanent: true);
 
   @override
   void initState() {
@@ -62,7 +65,9 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
                 HeadingText(text: 'Loading Menu'),
                 BodyText(text: 'Reconfiguring menu by OCR analyzing.'),
                 BodyText(text: 'Please wait a moment.'),
+                const SizedBox(height: 20),
                 SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
+                const SizedBox(height: 20),
                 const CircularProgressIndicator(),
               ],
             ));

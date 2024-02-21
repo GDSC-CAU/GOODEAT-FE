@@ -16,8 +16,6 @@ class OrderListPage extends StatefulWidget {
 }
 
 class _OrderListPageState extends State<OrderListPage> {
-  final OrderListController controller = Get.put(OrderListController());
-
   void _showAmountDue(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -134,7 +132,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                 Row(
                                   children: [
                                     Image.network(
-                                      menu.previewImageUrl,
+                                      menu.imageUrl,
                                       height: 60,
                                       width: 60,
                                       fit: BoxFit.cover,

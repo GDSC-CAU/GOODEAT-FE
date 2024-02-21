@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
+import 'package:goodeat_frontend/style.dart';
+import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class MenuInfoPage extends StatefulWidget {
@@ -51,26 +53,37 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          //음식 이름
                           HeadingSmallText(text: widget.menu.userMenuName),
                           BodySmallText(text: widget.menu.originMenuName),
+
+                          const SizedBox(height: 20),
+                          //음식 가격
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              BodyText(text: 'Price'),
-                              BodyText(text: '${widget.menu.userPrice}')
+                              BodySemiText(text: 'Price'),
+                              BodySemiText(
+                                  text: widget.menu.userPriceWithCurrencyUnit)
                             ],
                           ),
+                          const SizedBox(height: 20),
+                          //현지음식가격
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              BodyText(text: 'Local Price'),
-                              BodyText(text: '${widget.menu.originPrice}')
+                              BodySemiText(text: 'Local Price'),
+                              BodySemiText(
+                                  text: widget.menu.originPriceWithCurrencyUnit)
                             ],
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    Container(
+                      height: 10,
+                      decoration: const BoxDecoration(color: AppColor.tertiary),
+                    ),
                     //음식 설명 파트
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -80,7 +93,10 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                         child: BodySmallText(text: widget.menu.description),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    Container(
+                      height: 10,
+                      decoration: const BoxDecoration(color: AppColor.tertiary),
+                    ),
                     //Quantity 파트
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -91,13 +107,6 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                           BodyText(text: 'Quantity'),
                           //수량 선택 위젯
                           Container(
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                    width: 2, color: Color(0xFF9AA5B6)),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,49 +140,29 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                         ],
                       ),
                     ),
+                    Container(
+                      height: 10,
+                      decoration: const BoxDecoration(color: AppColor.tertiary),
+                    ),
                   ],
                 ),
               ],
             ),
-            //카트 추가 버튼
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GestureDetector(
-                onTap: () {
-                  final orderMenu =
-                      OrderMenuModel(menu: widget.menu, quantity: quantity);
-
-                  orderListController.addMenu(orderMenu);
-
-                  Get.back();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: 48,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFF545F70),
-                    shape: RoundedRectangleBorder(
-                      side:
-                          const BorderSide(width: 2, color: Color(0xFF545F70)),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BodyText(text: 'Add to Cart'),
-                      const SizedBox(width: 10),
-                      const Icon(Icons.shopping_cart_outlined)
-                    ],
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          final orderMenu =
+              OrderMenuModel(menu: widget.menu, quantity: quantity);
+          orderListController.addMenu(orderMenu);
+          Get.back();
+        },
+        child: const ButtomButtonWidget(
+          labelText: 'Add to Cart',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
