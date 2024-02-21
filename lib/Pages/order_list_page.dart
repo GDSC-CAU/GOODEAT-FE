@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/script_page.dart';
 import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
@@ -63,7 +64,7 @@ class _OrderListPageState extends State<OrderListPage> {
                     child: const CaptionText(text: 'Cancel'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const ScriptPage()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
