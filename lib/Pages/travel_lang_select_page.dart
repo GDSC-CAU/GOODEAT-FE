@@ -69,7 +69,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText(text: 'Place to Visit'),
+        title: BodySemiText(text: 'Profile Setting'),
       ),
       body: MyPadding(
         child: Column(

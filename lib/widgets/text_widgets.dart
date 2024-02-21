@@ -1,100 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:goodeat_frontend/style.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-class AppBarText extends Text {
-  final String text;
-
-  const AppBarText({
-    Key? key,
-    required this.text,
-  }) : super(key: key, text, style: const TextStyle(fontSize: 16));
-}
 
 class HeadingText extends Text {
   final String text;
+  final Color color;
 
-  HeadingText({
-    Key? key,
-    required this.text,
-  }) : super(
-            key: key,
-            text,
-            style:
-                GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w700));
+  HeadingText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
+          key: key,
+          text,
+          style: GoogleFonts.inter(
+            fontSize: 32,
+            fontWeight: FontWeight.w700,
+            color: color,
+          ),
+        );
 }
 
 class HeadingSmallText extends Text {
   final String text;
+  final Color color;
 
-  HeadingSmallText({
-    Key? key,
-    required this.text,
-  }) : super(
+  HeadingSmallText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
             key: key,
             text,
-            style:
-                GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700));
-}
-
-class CaptionText extends Text {
-  final String text;
-
-  const CaptionText({
-    Key? key,
-    required this.text,
-  }) : super(
-            key: key,
-            text,
-            style:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.normal));
+            style: GoogleFonts.inter(
+                fontSize: 24, fontWeight: FontWeight.w700, color: color));
 }
 
 class BodyText extends Text {
   final String text;
+  final Color color;
 
-  const BodyText({
-    Key? key,
-    required this.text,
-  }) : super(
+  BodyText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
             key: key,
             text,
-            style:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.normal));
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.normal, color: color));
 }
 
-class BodyHeavyText extends Text {
+class BodySemiText extends Text {
   final String text;
-
-  const BodyHeavyText({
-    Key? key,
-    required this.text,
-  }) : super(
+  final Color color;
+  BodySemiText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
             key: key,
             text,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600));
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.w600, color: color));
 }
 
 class BodySmallText extends Text {
   final String text;
-
-  const BodySmallText({
-    Key? key,
-    required this.text,
-  }) : super(
+  final Color color;
+  BodySmallText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
             key: key,
             text,
-            style:
-                const TextStyle(fontSize: 14, fontWeight: FontWeight.normal));
+            style: TextStyle(
+                fontSize: 14, fontWeight: FontWeight.normal, color: color));
 }
 
-class BodyHeavySmallText extends Text {
+class BodySemiSmallText extends Text {
   final String text;
-
-  const BodyHeavySmallText({
-    Key? key,
-    required this.text,
-  }) : super(
+  final Color color;
+  BodySemiSmallText({Key? key, required this.text, Color? color})
+      : color = color ?? AppColor.primary,
+        super(
             key: key,
             text,
-            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600));
+            style: TextStyle(
+                fontSize: 19, fontWeight: FontWeight.w600, color: color));
 }

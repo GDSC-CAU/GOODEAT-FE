@@ -28,7 +28,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppBarText(text: widget.menu.userMenuName),
+        title: BodySemiText(text: 'Profile Setting'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,18 +52,18 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           HeadingSmallText(text: widget.menu.userMenuName),
-                          CaptionText(text: widget.menu.originMenuName),
+                          BodySmallText(text: widget.menu.originMenuName),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const BodyText(text: 'Price'),
+                              BodyText(text: 'Price'),
                               BodyText(text: '${widget.menu.userPrice}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const BodyText(text: 'Local Price'),
+                              BodyText(text: 'Local Price'),
                               BodyText(text: '${widget.menu.originPrice}')
                             ],
                           )
@@ -77,7 +77,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                           vertical: 10, horizontal: 24),
                       child: Container(
                         alignment: Alignment.topLeft,
-                        child: CaptionText(text: widget.menu.description),
+                        child: BodySmallText(text: widget.menu.description),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -88,7 +88,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const BodyText(text: 'Quantity'),
+                          BodyText(text: 'Quantity'),
                           //수량 선택 위젯
                           Container(
                             decoration: ShapeDecoration(
@@ -114,7 +114,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                                       'assets/images/icons/minus.svg'),
                                   iconSize: 20,
                                 ),
-                                CaptionText(text: '$quantity'),
+                                BodySmallText(text: '$quantity'),
                                 IconButton(
                                   onPressed: () {
                                     setState(() {
@@ -160,12 +160,12 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BodyText(text: 'Add to Cart'),
-                      SizedBox(width: 10),
-                      Icon(Icons.shopping_cart_outlined)
+                      const SizedBox(width: 10),
+                      const Icon(Icons.shopping_cart_outlined)
                     ],
                   ),
                 ),

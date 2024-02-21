@@ -26,26 +26,26 @@ class _OrderListPageState extends State<OrderListPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //메인
-              const Padding(
-                padding: EdgeInsets.all(50.0),
+              Padding(
+                padding: const EdgeInsets.all(50.0),
                 child: Column(
                   children: [
                     BodyText(text: 'Total'),
-                    Divider(),
+                    const Divider(),
                     //가격
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CaptionText(text: 'Price'),
-                        CaptionText(text: '가격처리')
+                        BodySmallText(text: 'Price'),
+                        BodySmallText(text: '가격처리')
                       ],
                     ),
                     //로컬
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CaptionText(text: 'Local Price'),
-                        CaptionText(text: '가격처리')
+                        BodySmallText(text: 'Local Price'),
+                        BodySmallText(text: '가격처리')
                       ],
                     ),
                   ],
@@ -61,18 +61,18 @@ class _OrderListPageState extends State<OrderListPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    child: const CaptionText(text: 'Cancel'),
+                    child: BodySmallText(text: 'Cancel'),
                   ),
                   ElevatedButton(
                     onPressed: () => Get.to(() => const ScriptPage()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
-                        CaptionText(text: 'Order'),
-                        SizedBox(width: 10),
-                        Icon(Icons.check),
+                        BodySmallText(text: 'Order'),
+                        const SizedBox(width: 10),
+                        const Icon(Icons.check),
                       ],
                     ),
                   ),
@@ -87,7 +87,7 @@ class _OrderListPageState extends State<OrderListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText(text: 'Cart'),
+        title: BodySemiText(text: 'Profile Setting'),
       ),
       body: MyPadding(
         child: Column(
@@ -148,7 +148,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         BodyText(text: menu.userMenuName),
-                                        CaptionText(
+                                        BodySmallText(
                                             text:
                                                 menu.userPriceWithCurrencyUnit)
                                       ],
@@ -162,7 +162,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     BodyText(text: menu.originMenuName),
-                                    CaptionText(
+                                    BodySmallText(
                                         text: menu.originPriceWithCurrencyUnit)
                                   ],
                                 ),
@@ -180,7 +180,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                       'assets/images/icons/minus.svg'),
                                   iconSize: 20,
                                 ),
-                                CaptionText(text: '${orderMenu.quantity}'),
+                                BodySmallText(text: '${orderMenu.quantity}'),
                                 IconButton(
                                   onPressed: () {
                                     controller.plusQuantity(orderMenu);
@@ -209,7 +209,7 @@ class _OrderListPageState extends State<OrderListPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const BodyText(text: 'Check Amount Due'),
+                      BodyText(text: 'Check Amount Due'),
                       const SizedBox(width: 10),
                       SvgPicture.asset('assets/images/icons/dollar.svg'),
                     ],

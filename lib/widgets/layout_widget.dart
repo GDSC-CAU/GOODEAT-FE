@@ -6,7 +6,7 @@ class MyPadding extends Padding {
   MyPadding({
     Key? key,
     required Widget child,
-    this.paddingValue = 8.0,
+    this.paddingValue = 24,
   }) : super(
           key: key,
           padding: EdgeInsets.all(paddingValue),

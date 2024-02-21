@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/models/currency_model.dart';
 import 'package:goodeat_frontend/models/native_model.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/style.dart';
+import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
+import 'package:goodeat_frontend/widgets/layout_widget.dart';
+import 'package:goodeat_frontend/widgets/select_button.dart';
+import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class NativeLanguageSelect extends StatefulWidget {
   const NativeLanguageSelect({super.key, required this.fromHomeScreen});
@@ -183,27 +189,55 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
+        title: BodySemiText(text: 'Profile Setting'),
+        centerTitle: true,
+        leading: widget.fromHomeScreen
+            ? IconButton(
+                onPressed: () => Get.back(),
+                icon: SvgPicture.asset('assets/images/icons/left.svg'))
+            : null,
       ),
-      body: Center(
+      body: MyPadding(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ElevatedButton(
-              onPressed: () => _showCountrySelection(context),
-              child: Text('선택된 나라: $selectedCountry'),
+            HeadingText(text: 'Set your Profile', color: AppColor.primary),
+            BodyText(text: 'Select your language and currency unit'),
+            const SizedBox(height: 30),
+
+            //언어 선택
+            BodySmallText(text: 'Language select'),
+            const SizedBox(height: 7),
+            GestureDetector(
+              onTap: () => _showCountrySelection(context),
+              child: SelectButtonWidget(
+                  labelText: selectedCountry,
+                  textColor: AppColor.primary,
+                  backgroundColor: AppColor.white),
             ),
+
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _showCurrencySelection(context),
-              child: Text('선택된 화폐: $selectedCurrency'),
+
+            //화폐 선택
+            BodySmallText(text: 'Currency select'),
+            const SizedBox(height: 7),
+            GestureDetector(
+              onTap: () => _showCurrencySelection(context),
+              child: SelectButtonWidget(
+                  labelText: selectedCurrency,
+                  textColor: AppColor.primary,
+                  backgroundColor: AppColor.white),
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-                onPressed: () async => _submitCountryAndCurrency(context),
-                child: const Text('Next')),
           ],
         ),
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () => Get.back(),
+        child: const ButtomButtonWidget(
+          labelText: 'Complete Setting',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:goodeat_frontend/controller/my_country_currency_controller.dart'
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/menu_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
@@ -40,7 +41,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText(text: 'Menu List'),
+        title: BodySemiText(text: 'Profile Setting'),
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.home_filled)),
           IconButton(
@@ -52,7 +53,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadingText(text: 'Menu List'),
+            HeadingText(text: 'Menu List', color: AppColor.primary),
             FutureBuilder<List<MenuModel>>(
               future: menuList,
               builder: (context, snapshot) {

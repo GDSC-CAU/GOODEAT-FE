@@ -36,7 +36,7 @@ class _ScriptPageState extends State<ScriptPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText(text: 'Order Script'),
+        title: BodySemiText(text: 'Profile Setting'),
         actions: [
           IconButton(
               onPressed: () => Get.offAll(() => const HomePage()),
