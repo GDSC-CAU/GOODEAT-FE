@@ -20,7 +20,7 @@ class HeadingText extends Text {
             key: key,
             text,
             style:
-                GoogleFonts.inter(fontSize: 36, fontWeight: FontWeight.w700));
+                GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.w700));
 }
 
 class HeadingSmallText extends Text {
@@ -33,7 +33,7 @@ class HeadingSmallText extends Text {
             key: key,
             text,
             style:
-                GoogleFonts.inter(fontSize: 30, fontWeight: FontWeight.w700));
+                GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700));
 }
 
 class CaptionText extends Text {
@@ -46,7 +46,7 @@ class CaptionText extends Text {
             key: key,
             text,
             style:
-                const TextStyle(fontSize: 14, fontWeight: FontWeight.normal));
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.normal));
 }
 
 class BodyText extends Text {
@@ -59,7 +59,7 @@ class BodyText extends Text {
             key: key,
             text,
             style:
-                const TextStyle(fontSize: 22, fontWeight: FontWeight.normal));
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.normal));
 }
 
 class BodyHeavyText extends Text {
@@ -71,7 +71,7 @@ class BodyHeavyText extends Text {
   }) : super(
             key: key,
             text,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600));
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600));
 }
 
 class BodySmallText extends Text {
@@ -84,7 +84,7 @@ class BodySmallText extends Text {
             key: key,
             text,
             style:
-                const TextStyle(fontSize: 19, fontWeight: FontWeight.normal));
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.normal));
 }
 
 class BodyHeavySmallText extends Text {
