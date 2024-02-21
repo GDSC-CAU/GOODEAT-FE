@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/home_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
@@ -7,6 +8,7 @@ import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
 import 'package:goodeat_frontend/models/script_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class ScriptPage extends StatefulWidget {
@@ -36,11 +38,18 @@ class _ScriptPageState extends State<ScriptPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BodySemiText(text: 'Profile Setting'),
+        title: BodySemiText(text: 'Order Script'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
         actions: [
           IconButton(
               onPressed: () => Get.offAll(() => const HomePage()),
-              icon: const Icon(Icons.home)),
+              icon: SvgPicture.asset('assets/images/icons/home.svg'))
         ],
       ),
       body: Column(
@@ -50,11 +59,22 @@ class _ScriptPageState extends State<ScriptPage> {
             future: script,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    HeadingText(text: 'Loading Script'),
+                    BodyText(text: 'Please wait a moment.'),
+                    const SizedBox(height: 20),
+                    SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
+                    const SizedBox(height: 20),
+                    const CircularProgressIndicator(),
+                  ],
+                ));
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData) {
-                return const Text('No data available');
+                return const Center(child: Text('No data available'));
               } else {
                 return Column(
                   children: [
@@ -64,7 +84,7 @@ class _ScriptPageState extends State<ScriptPage> {
                         alignment: Alignment.center,
                         transform: Matrix4.rotationZ(3.14),
                         child: Container(
-                          color: Colors.grey,
+                          color: AppColor.tertiary,
                           child: Container(
                             margin: const EdgeInsets.all(30),
                             child: Column(
