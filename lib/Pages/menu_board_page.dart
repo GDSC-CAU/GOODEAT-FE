@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/menu_info_page.dart';
+import 'package:goodeat_frontend/Pages/order_list_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
@@ -43,7 +44,8 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.home_filled)),
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_cart_rounded)),
+              onPressed: () => Get.to(() => const OrderListPage()),
+              icon: const Icon(Icons.shopping_cart_rounded)),
         ],
       ),
       body: MyPadding(

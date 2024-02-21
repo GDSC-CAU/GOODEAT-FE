@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
+import 'package:goodeat_frontend/models/order_menu_model.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class MenuInfoPage extends StatefulWidget {
@@ -13,10 +15,12 @@ class MenuInfoPage extends StatefulWidget {
 }
 
 class _MenuInfoPageState extends State<MenuInfoPage> {
-  int quantity = 0;
+  int quantity = 1;
 
-  bool isZero() {
-    if (quantity > 0) return false;
+  final orderListController = Get.put(OrderListController(), permanent: true);
+
+  bool isLessThanOne() {
+    if (quantity > 1) return false;
     return true;
   }
 
@@ -24,12 +28,12 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const AppBarText(text: 'Menu Detail'),
+        title: AppBarText(text: widget.menu.userMenuName),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               children: [
                 //음식 사진
                 Image.network(
@@ -100,7 +104,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    if (!isZero()) {
+                                    if (!isLessThanOne()) {
                                       setState(() {
                                         quantity -= 1;
                                       });
@@ -131,36 +135,44 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                 ),
               ],
             ),
-          ),
-          //카트 추가 버튼
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GestureDetector(
-              onTap: () => Get.back(),
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: 48,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF545F70),
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 2, color: Color(0xFF545F70)),
-                    borderRadius: BorderRadius.circular(6),
+            //카트 추가 버튼
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GestureDetector(
+                onTap: () {
+                  final orderMenu =
+                      OrderMenuModel(menu: widget.menu, quantity: quantity);
+
+                  orderListController.addMenu(orderMenu);
+
+                  Get.back();
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: 48,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF545F70),
+                    shape: RoundedRectangleBorder(
+                      side:
+                          const BorderSide(width: 2, color: Color(0xFF545F70)),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
                   ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    MainText(text: 'Add to Cart'),
-                    SizedBox(width: 10),
-                    Icon(Icons.shopping_cart_outlined)
-                  ],
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MainText(text: 'Add to Cart'),
+                      SizedBox(width: 10),
+                      Icon(Icons.shopping_cart_outlined)
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
