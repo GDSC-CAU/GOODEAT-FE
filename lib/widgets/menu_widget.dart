@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
+import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class MenuWidget extends StatelessWidget {
   final MenuModel menu;
@@ -7,36 +8,45 @@ class MenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 이미지 표시
-            Image.network(
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border:
+            Border.all(color: Colors.grey[300]!), // Added border for separation
+        borderRadius: BorderRadius.circular(
+            10), // Added border radius for rounded corners
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          // 이미지 표시
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
               menu.imageUrl,
-              height: 50,
-              width: 100,
+              height: 130,
+              width: 130,
               fit: BoxFit.cover,
             ),
-            // 메뉴 이름 표시
-            Text(
-              menu.userMenuName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              menu.originMenuName,
-              style: const TextStyle(fontSize: 12),
-            ),
-            // 가격 표시
-            Text(menu.userPrice.toString()),
-            Text(
-              '${menu.originPrice}',
-              style: const TextStyle(fontSize: 12),
-            ),
-          ],
-        ),
+          ),
+          // 메뉴 이름 표시
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BodySemiText(text: menu.userMenuName),
+              BodySmallText(text: menu.originMenuName),
+            ],
+          ),
+          // 가격 표시
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              BodySemiSmallText(text: menu.userPriceWithCurrencyUnit),
+              BodySmallText(text: menu.originPriceWithCurrencyUnit),
+            ],
+          ),
+        ],
       ),
     );
   }
