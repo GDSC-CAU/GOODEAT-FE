@@ -45,6 +45,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
     return Scaffold(
       appBar: AppBar(
         title: BodySemiText(text: 'Menu List'),
+        centerTitle: true,
         leading: IconButton(
             onPressed: () => Get.back(),
             icon: SvgPicture.asset('assets/images/icons/left.svg')),

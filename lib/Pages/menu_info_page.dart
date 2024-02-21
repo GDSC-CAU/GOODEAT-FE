@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/order_list_page.dart';
 import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
@@ -30,7 +31,16 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BodySemiText(text: 'Profile Setting'),
+        title: BodySemiText(text: widget.menu.userMenuName),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
+        actions: [
+          IconButton(
+              onPressed: () => Get.to(() => const OrderListPage()),
+              icon: SvgPicture.asset('assets/images/icons/cart.svg')),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -158,7 +168,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
           orderListController.addMenu(orderMenu);
           Get.back();
         },
-        child: const ButtomButtonWidget(
+        child: const BottomButtonWidget(
           labelText: 'Add to Cart',
         ),
       ),

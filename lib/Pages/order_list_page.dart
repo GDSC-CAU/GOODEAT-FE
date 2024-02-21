@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/script_page.dart';
+import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/order_list_controller.dart';
+import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
+import 'package:goodeat_frontend/models/total_price_model.dart';
+import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/style.dart';
+import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
@@ -16,68 +22,99 @@ class OrderListPage extends StatefulWidget {
 }
 
 class _OrderListPageState extends State<OrderListPage> {
-  void _showAmountDue(BuildContext context) {
+  Future<TotalPriceModel> getPrice() async {
+    List<OrderMenuModel> orderMenuList =
+        Get.find<OrderListController>().orderList;
+    String originLanguageName =
+        Get.find<MyCountryCurrencyController>().myCurrency;
+    String userLanguageName = Get.find<TravelController>().travelCurrency;
+    TotalPriceModel price = await ApiService.postOrderAndGetRecipt(
+        orderMenuList, originLanguageName, userLanguageName);
+    return price;
+  }
+
+  void showAmountDue(
+    BuildContext context,
+  ) {
     showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) {
-        return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              //메인
-              Padding(
-                padding: const EdgeInsets.all(50.0),
+      builder: (context) => FutureBuilder(
+        future: getPrice(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
                 child: Column(
-                  children: [
-                    BodyText(text: 'Total'),
-                    const Divider(),
-                    //가격
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BodySmallText(text: 'Price'),
-                        BodySmallText(text: '가격처리')
-                      ],
-                    ),
-                    //로컬
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BodySmallText(text: 'Local Price'),
-                        BodySmallText(text: '가격처리')
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              //버튼들
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HeadingText(text: 'Loading Amount Due'),
+                BodyText(text: 'Please wait a moment.'),
+                const CircularProgressIndicator(),
+              ],
+            ));
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text('No data available'));
+          } else {
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                    ),
-                    child: BodySmallText(text: 'Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => Get.to(() => const ScriptPage()),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: Row(
+                  //메인
+                  Padding(
+                    padding: const EdgeInsets.all(50.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        BodySmallText(text: 'Order'),
-                        const SizedBox(width: 10),
-                        const Icon(Icons.check),
+                        BodySemiText(text: 'Total'),
+                        const Divider(),
+                        //가격
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BodySemiSmallText(text: 'Price'),
+                            BodySemiSmallText(
+                                text: snapshot
+                                    .data!.totalPriceWithUserCurrencyUnit)
+                          ],
+                        ),
+                        const SizedBox(height: 15),
+                        //로컬
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            BodySemiSmallText(text: 'Local Price'),
+                            BodySemiSmallText(
+                                text: snapshot
+                                    .data!.totalPriceWithOriginCurrencyUnit)
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ]);
-      },
+
+                  //버튼들
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Get.back(),
+                        child: const BottomSmallButtonWidget(
+                          labelText: 'Cancle',
+                          textColor: AppColor.primary,
+                          backgroundColor: AppColor.tertiary,
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: () => Get.to(() => const ScriptPage()),
+                          child: const BottomSmallButtonWidget(
+                              labelText: 'Order')),
+                    ],
+                  ),
+                ]);
+          }
+        },
+      ),
     );
   }
 
@@ -85,13 +122,17 @@ class _OrderListPageState extends State<OrderListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BodySemiText(text: 'Profile Setting'),
+        title: BodySemiText(text: 'Cart'),
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
       body: MyPadding(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            HeadingSmallText(text: 'Order List'),
+            BodySemiText(text: 'Order List'),
             GetBuilder<OrderListController>(
               builder: (controller) {
                 return Expanded(
@@ -104,18 +145,9 @@ class _OrderListPageState extends State<OrderListPage> {
                       return Container(
                         margin: const EdgeInsets.symmetric(vertical: 8),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            border: Border(top: BorderSide())),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -145,7 +177,11 @@ class _OrderListPageState extends State<OrderListPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        BodyText(text: menu.userMenuName),
+                                        menu.userMenuName.length > 12
+                                            ? BodyText(
+                                                text:
+                                                    '${menu.userMenuName.substring(0, 10)}...')
+                                            : BodyText(text: menu.userMenuName),
                                         BodySmallText(
                                             text:
                                                 menu.userPriceWithCurrencyUnit)
@@ -159,7 +195,11 @@ class _OrderListPageState extends State<OrderListPage> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    BodyText(text: menu.originMenuName),
+                                    menu.originMenuName.length > 12
+                                        ? BodyText(
+                                            text:
+                                                '${menu.originMenuName.substring(0, 10)}...')
+                                        : BodyText(text: menu.originMenuName),
                                     BodySmallText(
                                         text: menu.originPriceWithCurrencyUnit)
                                   ],
@@ -197,27 +237,17 @@ class _OrderListPageState extends State<OrderListPage> {
                 );
               },
             ),
-            //하단 주문 버튼
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: () => _showAmountDue(context),
-                  style: ElevatedButton.styleFrom(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      BodyText(text: 'Check Amount Due'),
-                      const SizedBox(width: 10),
-                      SvgPicture.asset('assets/images/icons/dollar.svg'),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            const SizedBox(height: 40),
           ],
         ),
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () => showAmountDue(context),
+        child: const BottomButtonWidget(
+          labelText: 'Check Amount Due',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

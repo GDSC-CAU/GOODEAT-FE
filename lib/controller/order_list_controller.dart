@@ -33,4 +33,9 @@ class OrderListController extends GetxController {
       update();
     }
   }
+
+  void initCart() {
+    _orderList.clear();
+    update();
+  }
 }

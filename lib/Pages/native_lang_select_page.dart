@@ -236,7 +236,7 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
           _submitCountryAndCurrency(context);
           Get.back();
         },
-        child: const ButtomButtonWidget(
+        child: const BottomButtonWidget(
           labelText: 'Complete Setting',
         ),
       ),

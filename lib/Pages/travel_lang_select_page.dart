@@ -229,7 +229,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
           _submitCountryAndCurrency(context);
           Get.back();
         },
-        child: const ButtomButtonWidget(
+        child: const BottomButtonWidget(
           labelText: 'Complete Setting',
         ),
       ),
