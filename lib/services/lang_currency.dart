@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:goodeat_frontend/models/currency_model.dart';
+import 'package:goodeat_frontend/models/menu_item_for_script.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/models/native_model.dart';
+import 'package:goodeat_frontend/models/order_menu_model.dart';
+import 'package:goodeat_frontend/models/script_model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -10,6 +13,7 @@ class ApiService {
   static const String language = 'language';
   static const String currency = 'currency';
   static const String reconfigure = 'reconfigure';
+  static const String script = 'script';
 
   //나라 리스트 받기
   static Future<List<NativeModel>> getLanguages() async {
@@ -74,5 +78,37 @@ class ApiService {
         jsonDecode(utf8.decode(response.bodyBytes));
     menuList = responseList.map((menu) => MenuModel.fromJson(menu)).toList();
     return menuList;
+  }
+
+  //주문 스크립트 받기
+  static Future<ScriptModel> postMenuListAndGetScript(
+      List<OrderMenuModel> orderMenuList,
+      String originLanguageName,
+      String userLanguageName) async {
+    List<MenuItemForScript> menuItems = orderMenuList
+        .map((orderMenu) => MenuItemForScript(
+            originMenuName: orderMenu.menu.originMenuName,
+            userMenuName: orderMenu.menu.userMenuName,
+            quantity: orderMenu.quantity))
+        .toList();
+
+    final body = {
+      'menuItems': menuItems.map((item) => item.toObject()).toList(),
+      'originLanguageName': originLanguageName,
+      'userLanguageName': userLanguageName,
+    };
+
+    final header = {'Content-Type': 'application/json; charset=UTF-8'};
+    final url = Uri.parse('$baseURL/script');
+    final response =
+        await http.post(url, body: jsonEncode(body), headers: header);
+
+    if (response.statusCode != 200) {
+      const String errorMessage = '스크립트 받아오기를 실패하였습니다.';
+      throw Exception(errorMessage);
+    }
+    final script =
+        ScriptModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+    return script;
   }
 }
