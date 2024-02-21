@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppBarText extends Text {
   final String text;
@@ -12,25 +13,27 @@ class AppBarText extends Text {
 class HeadingText extends Text {
   final String text;
 
-  const HeadingText({
+  HeadingText({
     Key? key,
     required this.text,
   }) : super(
             key: key,
             text,
-            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold));
+            style:
+                GoogleFonts.inter(fontSize: 36, fontWeight: FontWeight.w700));
 }
 
-class TitleText extends Text {
+class HeadingSmallText extends Text {
   final String text;
 
-  const TitleText({
+  HeadingSmallText({
     Key? key,
     required this.text,
   }) : super(
             key: key,
             text,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold));
+            style:
+                GoogleFonts.inter(fontSize: 30, fontWeight: FontWeight.w700));
 }
 
 class CaptionText extends Text {
@@ -46,15 +49,52 @@ class CaptionText extends Text {
                 const TextStyle(fontSize: 14, fontWeight: FontWeight.normal));
 }
 
-class MainText extends Text {
+class BodyText extends Text {
   final String text;
 
-  const MainText({
+  const BodyText({
     Key? key,
     required this.text,
   }) : super(
             key: key,
             text,
             style:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.normal));
+                const TextStyle(fontSize: 22, fontWeight: FontWeight.normal));
+}
+
+class BodyHeavyText extends Text {
+  final String text;
+
+  const BodyHeavyText({
+    Key? key,
+    required this.text,
+  }) : super(
+            key: key,
+            text,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600));
+}
+
+class BodySmallText extends Text {
+  final String text;
+
+  const BodySmallText({
+    Key? key,
+    required this.text,
+  }) : super(
+            key: key,
+            text,
+            style:
+                const TextStyle(fontSize: 19, fontWeight: FontWeight.normal));
+}
+
+class BodyHeavySmallText extends Text {
+  final String text;
+
+  const BodyHeavySmallText({
+    Key? key,
+    required this.text,
+  }) : super(
+            key: key,
+            text,
+            style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600));
 }

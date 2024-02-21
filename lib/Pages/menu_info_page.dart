@@ -51,20 +51,20 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          TitleText(text: widget.menu.userMenuName),
+                          HeadingSmallText(text: widget.menu.userMenuName),
                           CaptionText(text: widget.menu.originMenuName),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const MainText(text: 'Price'),
-                              MainText(text: '${widget.menu.userPrice}')
+                              const BodyText(text: 'Price'),
+                              BodyText(text: '${widget.menu.userPrice}')
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const MainText(text: 'Local Price'),
-                              MainText(text: '${widget.menu.originPrice}')
+                              const BodyText(text: 'Local Price'),
+                              BodyText(text: '${widget.menu.originPrice}')
                             ],
                           )
                         ],
@@ -88,7 +88,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const MainText(text: 'Quantity'),
+                          const BodyText(text: 'Quantity'),
                           //수량 선택 위젯
                           Container(
                             decoration: ShapeDecoration(
@@ -163,7 +163,7 @@ class _MenuInfoPageState extends State<MenuInfoPage> {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      MainText(text: 'Add to Cart'),
+                      BodyText(text: 'Add to Cart'),
                       SizedBox(width: 10),
                       Icon(Icons.shopping_cart_outlined)
                     ],

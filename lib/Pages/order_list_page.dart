@@ -30,7 +30,7 @@ class _OrderListPageState extends State<OrderListPage> {
                 padding: EdgeInsets.all(50.0),
                 child: Column(
                   children: [
-                    MainText(text: 'Total'),
+                    BodyText(text: 'Total'),
                     Divider(),
                     //가격
                     Row(
@@ -93,7 +93,7 @@ class _OrderListPageState extends State<OrderListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleText(text: 'Order List'),
+            HeadingSmallText(text: 'Order List'),
             GetBuilder<OrderListController>(
               builder: (controller) {
                 return Expanded(
@@ -147,7 +147,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        MainText(text: menu.userMenuName),
+                                        BodyText(text: menu.userMenuName),
                                         CaptionText(
                                             text:
                                                 menu.userPriceWithCurrencyUnit)
@@ -161,7 +161,7 @@ class _OrderListPageState extends State<OrderListPage> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    MainText(text: menu.originMenuName),
+                                    BodyText(text: menu.originMenuName),
                                     CaptionText(
                                         text: menu.originPriceWithCurrencyUnit)
                                   ],
@@ -209,7 +209,7 @@ class _OrderListPageState extends State<OrderListPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const MainText(text: 'Check Amount Due'),
+                      const BodyText(text: 'Check Amount Due'),
                       const SizedBox(width: 10),
                       SvgPicture.asset('assets/images/icons/dollar.svg'),
                     ],

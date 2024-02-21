@@ -52,7 +52,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HeadingText(text: 'Menu List'),
+            HeadingText(text: 'Menu List'),
             FutureBuilder<List<MenuModel>>(
               future: menuList,
               builder: (context, snapshot) {

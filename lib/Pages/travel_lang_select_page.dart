@@ -75,7 +75,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const HeadingText(text: 'Where to visit?'),
+            HeadingText(text: 'Where to visit?'),
             const Text('Click a image below that you are planning to visit'),
             Expanded(child: makeTravelList(travelList)),
           ],

@@ -70,9 +70,9 @@ class _ScriptPageState extends State<ScriptPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const TitleText(text: 'Transition Script'),
+                                HeadingSmallText(text: 'Transition Script'),
                                 const SizedBox(height: 20),
-                                MainText(text: snapshot.data!.originScript),
+                                BodyText(text: snapshot.data!.originScript),
                               ],
                             ),
                           ),
@@ -87,9 +87,9 @@ class _ScriptPageState extends State<ScriptPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const TitleText(text: 'My Language Script'),
+                            HeadingSmallText(text: 'My Language Script'),
                             const SizedBox(height: 20),
-                            MainText(text: snapshot.data!.originScript),
+                            BodyText(text: snapshot.data!.originScript),
                           ],
                         ),
                       ),
