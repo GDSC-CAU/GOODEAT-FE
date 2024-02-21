@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/menu_info_page.dart';
 import 'package:goodeat_frontend/Pages/order_list_page.dart';
@@ -6,7 +7,6 @@ import 'package:goodeat_frontend/controller/my_country_currency_controller.dart'
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
-import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/menu_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
@@ -41,35 +41,39 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BodySemiText(text: 'Profile Setting'),
+        title: BodySemiText(text: 'Menu List'),
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.home_filled)),
           IconButton(
               onPressed: () => Get.to(() => const OrderListPage()),
-              icon: const Icon(Icons.shopping_cart_rounded)),
+              icon: SvgPicture.asset('assets/images/icons/cart.svg')),
         ],
       ),
-      body: MyPadding(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HeadingText(text: 'Menu List', color: AppColor.primary),
-            FutureBuilder<List<MenuModel>>(
-              future: menuList,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No data available');
-                } else {
-                  return Expanded(child: buildMenuGrid(snapshot.data!));
-                }
-              },
-            ),
-          ],
-        ),
+      body: FutureBuilder<List<MenuModel>>(
+        future: menuList,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                HeadingText(text: 'Loading Menu'),
+                BodyText(text: 'Reconfiguring menu by OCR analyzing.'),
+                BodyText(text: 'Please wait a moment.'),
+                SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
+                const CircularProgressIndicator(),
+              ],
+            ));
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Text('No data available');
+          } else {
+            return MyPadding(child: buildMenuGrid(snapshot.data!));
+          }
+        },
       ),
     );
   }
@@ -78,13 +82,14 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 5.0,
-        mainAxisSpacing: 5.0,
+        crossAxisSpacing: 2,
+        mainAxisSpacing: 5,
+        childAspectRatio: 1 / 2,
       ),
       itemCount: menuList.length,
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
-            onTap: () => Get.to(MenuInfoPage(menu: menuList[index])),
+            onTap: () => Get.to(() => MenuInfoPage(menu: menuList[index])),
             child: MenuWidget(menu: menuList[index]));
       },
     );
