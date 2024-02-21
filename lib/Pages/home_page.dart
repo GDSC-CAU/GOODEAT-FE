@@ -116,15 +116,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  GetBuilder<MyCountryCurrencyController>(
-                      builder: (myController) => Column(
-                            children: [
-                              BodySmallText(text: 'My Profile'),
-                              BodySemiSmallText(
-                                  text:
-                                      '${myController.myCountry} & ${myController.myCurrency}'),
-                            ],
-                          )),
+                  //여행 정보
                   GetBuilder<TravelController>(
                       builder: (travelController) => Column(
                             children: [
@@ -134,8 +126,20 @@ class _HomePageState extends State<HomePage> {
                                       '${travelController.travelLanguage} & ${travelController.travelCurrency}'),
                             ],
                           )),
+                  //본인정보
+                  GetBuilder<MyCountryCurrencyController>(
+                      builder: (myController) => Column(
+                            children: [
+                              BodySmallText(text: 'My Profile'),
+                              BodySemiSmallText(
+                                  text:
+                                      '${myController.myCountry} & ${myController.myCurrency}'),
+                            ],
+                          )),
+
                   GestureDetector(
-                    onTap: () => Get.to(() => const TravelLanguageSelectPage()),
+                    onTap: () => Get.to(() =>
+                        const TravelLanguageSelectPage(fromHomeScreen: true)),
                     child: Container(
                       alignment: Alignment.center,
                       width: MediaQuery.of(context).size.width * 0.8,

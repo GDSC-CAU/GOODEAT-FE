@@ -28,7 +28,7 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
   late Future<List<CurrencyModel>> currencies;
 
   //컨트롤러
-  final controller = Get.put(MyCountryCurrencyController());
+  final controller = Get.put(MyCountryCurrencyController(), permanent: true);
 
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
@@ -66,7 +66,7 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
                     child: TextField(
                       controller: searchLanguageController,
                       decoration: const InputDecoration(
-                        labelText: 'Search Country',
+                        labelText: 'Search Language',
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (value) {
@@ -191,11 +191,9 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
         automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
         title: BodySemiText(text: 'Profile Setting'),
         centerTitle: true,
-        leading: widget.fromHomeScreen
-            ? IconButton(
-                onPressed: () => Get.back(),
-                icon: SvgPicture.asset('assets/images/icons/left.svg'))
-            : null,
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
       body: MyPadding(
         child: Column(

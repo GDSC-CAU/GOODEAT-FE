@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/native_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/currency_model.dart';
 import 'package:goodeat_frontend/models/native_model.dart';
@@ -13,7 +14,8 @@ import 'package:goodeat_frontend/widgets/select_button.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class TravelLanguageSelectPage extends StatefulWidget {
-  const TravelLanguageSelectPage({super.key});
+  final bool fromHomeScreen;
+  const TravelLanguageSelectPage({super.key, required this.fromHomeScreen});
 
   @override
   State<TravelLanguageSelectPage> createState() =>
@@ -27,7 +29,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
   late Future<List<CurrencyModel>> currencies;
 
   //컨트롤러
-  final controller = Get.put(TravelController());
+  final controller = Get.put(TravelController(), permanent: true);
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   TextEditingController searchLanguageController = TextEditingController();
@@ -64,7 +66,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
                     child: TextField(
                       controller: searchLanguageController,
                       decoration: const InputDecoration(
-                        labelText: 'Search Country',
+                        labelText: 'Search Language',
                         border: OutlineInputBorder(),
                       ),
                       onChanged: (value) {
@@ -173,18 +175,27 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
     //controller를 통해 저장
     controller.modify(selectedCountry, selectedCurrency);
 
-    Get.back();
+    if (widget.fromHomeScreen) {
+      //홈페이지에서 push하여 재설정일 경우
+      Get.back();
+    } else {
+      //처음 들어온 경우
+      Get.to(() => const NativeLanguageSelect(fromHomeScreen: false));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
         title: BodySemiText(text: 'Place to Visit'),
         centerTitle: true,
-        leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: SvgPicture.asset('assets/images/icons/left.svg')),
+        leading: widget.fromHomeScreen
+            ? IconButton(
+                onPressed: () => Get.back(),
+                icon: SvgPicture.asset('assets/images/icons/left.svg'))
+            : null,
       ),
       body: MyPadding(
         child: Column(
@@ -194,7 +205,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
               text: 'Where to visit?',
               color: AppColor.primary,
             ),
-            BodyText(text: 'Select your language and currency unit'),
+            BodyText(text: 'Select a language and currency unit'),
             BodySemiText(text: 'that you are planning to visit'),
             const SizedBox(height: 30),
 

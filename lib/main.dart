@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
-import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
@@ -57,19 +57,20 @@ class CheckStorageState extends State<CheckStorage> {
     String? travelLanguage = await secureStorage.read(key: 'travelLanguage');
     String? travelCurrency = await secureStorage.read(key: 'travelCurrency');
 
-    if (myCountry != null && myCurrency != null) {
-      //이미 정보가 있다면
-      final controller = Get.put(MyCountryCurrencyController());
-      controller.modify(myCountry, myCurrency);
-      if (travelLanguage != null) {
-        final travelController = Get.put(TravelController());
-        travelController.modify(travelLanguage, travelCurrency!);
-      }
+    // if (myCountry != null && myCurrency != null) {
+    //   //이미 정보가 있다면
+    //   final controller = Get.put(MyCountryCurrencyController());
+    //   controller.modify(myCountry, myCurrency);
+    //   if (travelLanguage != null) {
+    //     final travelController = Get.put(TravelController());
+    //     travelController.modify(travelLanguage, travelCurrency!);
+    //   }
 
-      Get.off(() => const HomePage());
-    } else {
-      Get.off(() => const NativeLanguageSelect(fromHomeScreen: false));
-    }
+    //   Get.off(() => const HomePage());
+    // } else {
+    //   Get.off(() => const TravelLanguageSelectPage(fromHomeScreen: false));
+    // }
+    Get.off(() => const TravelLanguageSelectPage(fromHomeScreen: false));
   }
 
   @override

@@ -52,9 +52,12 @@ class _OrderListPageState extends State<OrderListPage> {
               ],
             ));
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return MyPadding(
+                child: Center(
+                    child: BodySemiText(text: 'Error: ${snapshot.error}')));
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('No data available'));
+            return MyPadding(
+                child: Center(child: BodySemiText(text: 'No data available')));
           } else {
             return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

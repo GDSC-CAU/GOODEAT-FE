@@ -73,9 +73,12 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
               ],
             ));
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+            return MyPadding(
+                child: Center(
+                    child: BodySemiText(text: 'Error: ${snapshot.error}')));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text('No data available');
+            return MyPadding(
+                child: Center(child: BodySemiText(text: 'No data available')));
           } else {
             return MyPadding(child: buildMenuGrid(snapshot.data!));
           }

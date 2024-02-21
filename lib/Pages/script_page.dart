@@ -9,6 +9,7 @@ import 'package:goodeat_frontend/models/order_menu_model.dart';
 import 'package:goodeat_frontend/models/script_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
 import 'package:goodeat_frontend/style.dart';
+import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 class ScriptPage extends StatefulWidget {
@@ -72,9 +73,13 @@ class _ScriptPageState extends State<ScriptPage> {
                   ],
                 ));
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return MyPadding(
+                    child: Center(
+                        child: BodySemiText(text: 'Error: ${snapshot.error}')));
               } else if (!snapshot.hasData) {
-                return const Center(child: Text('No data available'));
+                return MyPadding(
+                    child:
+                        Center(child: BodySemiText(text: 'No data available')));
               } else {
                 return Column(
                   children: [
