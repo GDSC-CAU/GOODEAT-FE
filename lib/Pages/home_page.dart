@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:goodeat_frontend/Pages/menu_board_page.dart';
 import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/pages/native_lang_select_page.dart';
+import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
+import 'package:goodeat_frontend/widgets/text_widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,37 +50,156 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
       ),
       body: MyPadding(
-        child: Center(
-          child: Column(
-            children: [
-              GetBuilder<MyCountryCurrencyController>(
-                builder: (myController) => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(myController.myCountry),
-                    Text(myController.myCurrency),
-                  ],
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Flexible(
+              flex: 1,
+              child: Column(
+                children: [
+                  BodySemiSmallText(text: 'Your passport to global flavors'),
+                  const SizedBox(height: 20),
+                  SvgPicture.asset('assets/images/logo.svg'),
+                  const SizedBox(height: 20),
+                  BodySemiText(text: 'Global food Order &'),
+                  BodySemiText(text: 'Easy Assistance for Travelers'),
+                ],
               ),
-              const SizedBox(height: 30),
-              GetBuilder<TravelController>(
-                builder: (travelController) =>
-                    Text(travelController.travelLanguage),
+            ),
+            Flexible(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  //카메라
+                  GestureDetector(
+                    onTap: () => getImage(),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 150,
+                      decoration: ShapeDecoration(
+                          color: AppColor.tertiary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Column(
+                            children: [
+                              Column(
+                                children: [
+                                  HeadingSmallText(
+                                      text: 'Help food to order !'),
+                                  Row(
+                                    children: [
+                                      HeadingSmallText(
+                                          text: 'Have a great trip'),
+                                      const Icon(Icons.camera_alt_sharp),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  BodySemiSmallText(
+                                      text: 'Change your trip destination'),
+                                  const Icon(
+                                    Icons.keyboard_arrow_right_rounded,
+                                    color: AppColor.primary,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GetBuilder<MyCountryCurrencyController>(
+                      builder: (myController) => Column(
+                            children: [
+                              BodySmallText(text: 'My Profile'),
+                              BodySemiSmallText(
+                                  text:
+                                      '${myController.myCountry} & ${myController.myCurrency}'),
+                            ],
+                          )),
+                  GetBuilder<TravelController>(
+                      builder: (travelController) => Column(
+                            children: [
+                              BodySmallText(text: 'Travel Language & Currency'),
+                              BodySemiSmallText(
+                                  text:
+                                      '${travelController.travelLanguage} & ${travelController.travelCurrency}'),
+                            ],
+                          )),
+                  GestureDetector(
+                    onTap: () => Get.to(() => const TravelLanguageSelectPage()),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 48,
+                      decoration: ShapeDecoration(
+                          color: AppColor.tertiary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.airplane_ticket_outlined,
+                                color: AppColor.primary,
+                              ),
+                              const SizedBox(width: 10),
+                              BodySemiText(
+                                  text: 'Change your trip destination'),
+                              const Icon(
+                                Icons.keyboard_arrow_right_rounded,
+                                color: AppColor.primary,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Get.to(
+                        () => const NativeLanguageSelect(fromHomeScreen: true)),
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 48,
+                      decoration: ShapeDecoration(
+                          color: AppColor.tertiary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 10),
+                              BodySemiText(text: 'Change your profile setting'),
+                              const Icon(
+                                Icons.keyboard_arrow_right_rounded,
+                                color: AppColor.primary,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                onPressed: () => Get.to(
-                    () => const NativeLanguageSelect(fromHomeScreen: true)),
-                child: const Text('본인 언어/화폐 설정'),
-              ),
-              ElevatedButton(
-                onPressed: () => Get.to(() => const TravelLanguageSelectPage()),
-                child: const Text('여행지 설정'),
-              ),
-              IconButton(
-                  onPressed: () => getImage(),
-                  icon: const Icon(Icons.camera_alt_outlined)),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
