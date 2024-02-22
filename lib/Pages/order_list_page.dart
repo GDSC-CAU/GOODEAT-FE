@@ -266,12 +266,14 @@ class _OrderListPageState extends State<OrderListPage> {
           ],
         ),
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () => showAmountDue(context),
-        child: const BottomButtonWidget(
-          labelText: 'Check Amount Due',
-        ),
-      ),
+      floatingActionButton: Get.find<OrderListController>().isEmptyOrderList()
+          ? null
+          : GestureDetector(
+              onTap: () => showAmountDue(context),
+              child: const BottomButtonWidget(
+                labelText: 'Check Amount Due',
+              ),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
