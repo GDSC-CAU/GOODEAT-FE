@@ -38,4 +38,8 @@ class OrderListController extends GetxController {
     _orderList.clear();
     update();
   }
+
+  bool isEmptyOrderList() {
+    return _orderList.isEmpty;
+  }
 }
