@@ -10,12 +10,8 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border:
-            Border.all(color: Colors.grey[300]!), // Added border for separation
-        borderRadius: BorderRadius.circular(
-            10), // Added border radius for rounded corners
-      ),
+      width: 135,
+      height: 250,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -32,12 +28,19 @@ class MenuWidget extends StatelessWidget {
           ),
           // 메뉴 이름 표시
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BodySemiText(text: menu.userMenuName),
-              BodySmallText(text: menu.originMenuName),
+              menu.userMenuName.length > 12
+                  ? BodySemiText(
+                      text: '${menu.userMenuName.substring(0, 10)}...')
+                  : BodySemiText(text: menu.userMenuName),
+              menu.originMenuName.length > 12
+                  ? BodySmallText(
+                      text: '${menu.originMenuName.substring(0, 10)}...')
+                  : BodySmallText(text: menu.originMenuName),
             ],
           ),
+          const SizedBox(height: 10),
           // 가격 표시
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,

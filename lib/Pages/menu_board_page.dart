@@ -82,19 +82,22 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
             return MyPadding(
                 child: Center(child: BodySemiText(text: 'No data available')));
           } else {
-            return MyPadding(child: buildMenuGrid(snapshot.data!));
+            return Column(
+              children: [
+                Expanded(child: buildMenuGrid(snapshot.data!)),
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => const OrderListPage());
+                  },
+                  child: const BottomButtonWidget(
+                    labelText: 'Go to Cart',
+                  ),
+                ),
+              ],
+            );
           }
         },
       ),
-      floatingActionButton: GestureDetector(
-        onTap: () {
-          Get.to(() => const OrderListPage());
-        },
-        child: const BottomButtonWidget(
-          labelText: 'Go to Cart',
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -102,9 +105,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 5,
-        childAspectRatio: 1 / 2,
+        childAspectRatio: 3 / 4,
       ),
       itemCount: menuList.length,
       itemBuilder: (BuildContext context, int index) {

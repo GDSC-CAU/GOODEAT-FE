@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: MyPadding(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //로고
             SvgPicture.asset('assets/images/home/logo.svg'),
@@ -353,7 +353,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
+            //로고
             SvgPicture.asset('assets/images/home/bottom.svg')
           ],
         ),

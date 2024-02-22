@@ -7,6 +7,7 @@ import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
+import 'package:goodeat_frontend/widgets/text_widgets.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');

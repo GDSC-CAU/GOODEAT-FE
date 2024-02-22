@@ -131,7 +131,8 @@ class _OrderListPageState extends State<OrderListPage> {
             onPressed: () => Get.back(),
             icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
-      body: MyPadding(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -157,12 +158,9 @@ class _OrderListPageState extends State<OrderListPage> {
                             MenuModel menu = orderMenu.menu;
 
                             return Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
                               decoration: const BoxDecoration(
                                   color: Colors.white,
-                                  border: Border(top: BorderSide())),
+                                  border: Border(top: BorderSide(width: 0.3))),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -172,59 +170,65 @@ class _OrderListPageState extends State<OrderListPage> {
                                     icon: SvgPicture.asset(
                                         'assets/images/icons/x.svg'),
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      //음식 사진 및 유저이름 및 유저가격
-                                      Row(
-                                        children: [
-                                          Image.network(
-                                            menu.imageUrl,
-                                            height: 60,
-                                            width: 60,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          const SizedBox(width: 10),
-                                          //유저 음식 이름 및 가격
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              menu.userMenuName.length > 12
-                                                  ? BodyText(
-                                                      text:
-                                                          '${menu.userMenuName.substring(0, 10)}...')
-                                                  : BodyText(
-                                                      text: menu.userMenuName),
-                                              BodySmallText(
-                                                  text: menu
-                                                      .userPriceWithCurrencyUnit)
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      //현지 음식 이름 및 가격
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          menu.originMenuName.length > 12
-                                              ? BodyText(
-                                                  text:
-                                                      '${menu.originMenuName.substring(0, 10)}...')
-                                              : BodyText(
-                                                  text: menu.originMenuName),
-                                          BodySmallText(
-                                              text: menu
-                                                  .originPriceWithCurrencyUnit)
-                                        ],
-                                      ),
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        //음식 사진 및 유저이름 및 유저가격
+                                        Row(
+                                          children: [
+                                            Image.network(
+                                              menu.imageUrl,
+                                              height: 60,
+                                              width: 60,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            const SizedBox(width: 10),
+                                            //유저 음식 이름 및 가격
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                menu.userMenuName.length > 12
+                                                    ? BodyText(
+                                                        text:
+                                                            '${menu.userMenuName.substring(0, 10)}...')
+                                                    : BodyText(
+                                                        text:
+                                                            menu.userMenuName),
+                                                BodySmallText(
+                                                    text: menu
+                                                        .userPriceWithCurrencyUnit)
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        //현지 음식 이름 및 가격
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            menu.originMenuName.length > 12
+                                                ? BodyText(
+                                                    text:
+                                                        '${menu.originMenuName.substring(0, 10)}...')
+                                                : BodyText(
+                                                    text: menu.originMenuName),
+                                            BodySmallText(
+                                                text: menu
+                                                    .originPriceWithCurrencyUnit)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   //수량 체크
                                   Row(
