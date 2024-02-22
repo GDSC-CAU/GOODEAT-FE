@@ -8,6 +8,7 @@ import 'package:goodeat_frontend/controller/order_list_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/menu_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
+import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/menu_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
@@ -38,6 +39,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
         originCurrencyName: travelController.travelCurrency,
         userCurrencyName: myCountryCurrencyController.myCurrency,
         base64EncodedImage: widget.base64EncodedImage);
+    Get.find<OrderListController>().initCart();
   }
 
   @override
@@ -84,6 +86,15 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
           }
         },
       ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Get.to(() => const OrderListPage());
+        },
+        child: const BottomButtonWidget(
+          labelText: 'Go to Cart',
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
