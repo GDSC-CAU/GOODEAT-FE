@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/native_lang_select_page.dart';
 import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
@@ -68,9 +69,9 @@ class CheckStorageState extends State<CheckStorage> {
 
     //   Get.off(() => const HomePage());
     // } else {
-    //   Get.off(() => const TravelLanguageSelectPage(fromHomeScreen: false));
+    //   Get.off(() => const NativeLanguageSelect(fromHomeScreen: false));
     // }
-    Get.off(() => const TravelLanguageSelectPage(fromHomeScreen: false));
+    Get.off(() => const NativeLanguageSelect(fromHomeScreen: false));
   }
 
   @override

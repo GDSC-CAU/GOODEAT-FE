@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:goodeat_frontend/Pages/travel_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/models/currency_model.dart';
 import 'package:goodeat_frontend/models/native_model.dart';
-import 'package:goodeat_frontend/pages/home_page.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
 import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
@@ -180,7 +180,9 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
       Get.back();
     } else {
       //처음 들어온 경우
-      Get.off(() => const HomePage());
+      Get.to(() => const TravelLanguageSelectPage(
+            fromHomeScreen: false,
+          ));
     }
   }
 
@@ -188,13 +190,14 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
-        title: BodySemiText(text: 'Profile Setting'),
-        centerTitle: true,
-        leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: SvgPicture.asset('assets/images/icons/left.svg')),
-      ),
+          automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
+          title: BodySemiText(text: 'Profile Setting'),
+          centerTitle: true,
+          leading: widget.fromHomeScreen
+              ? IconButton(
+                  onPressed: () => Get.back(),
+                  icon: SvgPicture.asset('assets/images/icons/left.svg'))
+              : null),
       body: MyPadding(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

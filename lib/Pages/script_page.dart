@@ -114,7 +114,7 @@ class _ScriptPageState extends State<ScriptPage> {
                           children: [
                             HeadingSmallText(text: 'My Language Script'),
                             const SizedBox(height: 20),
-                            BodyText(text: snapshot.data!.originScript),
+                            BodyText(text: snapshot.data!.userScript),
                           ],
                         ),
                       ),

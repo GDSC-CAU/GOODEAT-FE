@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:goodeat_frontend/Pages/native_lang_select_page.dart';
+import 'package:goodeat_frontend/Pages/home_page.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/currency_model.dart';
 import 'package:goodeat_frontend/models/native_model.dart';
@@ -180,7 +180,7 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
       Get.back();
     } else {
       //처음 들어온 경우
-      Get.to(() => const NativeLanguageSelect(fromHomeScreen: false));
+      Get.to(() => const HomePage());
     }
   }
 
@@ -188,14 +188,11 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: widget.fromHomeScreen ? true : false,
         title: BodySemiText(text: 'Place to Visit'),
         centerTitle: true,
-        leading: widget.fromHomeScreen
-            ? IconButton(
-                onPressed: () => Get.back(),
-                icon: SvgPicture.asset('assets/images/icons/left.svg'))
-            : null,
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
       body: MyPadding(
         child: Column(
