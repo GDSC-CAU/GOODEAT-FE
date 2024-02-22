@@ -194,42 +194,44 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
             onPressed: () => Get.back(),
             icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
-      body: MyPadding(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HeadingText(
-              text: 'Where to visit?',
-              color: AppColor.primary,
-            ),
-            BodyText(text: 'Select a language and currency unit'),
-            BodySemiText(text: 'that you are planning to visit'),
-            const SizedBox(height: 30),
+      body: BackGround(
+        child: MyPadding(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeadingText(
+                text: 'Where to visit?',
+                color: AppColor.primary,
+              ),
+              BodyText(text: 'Select a language and currency unit'),
+              BodySemiText(text: 'that you are planning to visit'),
+              const SizedBox(height: 30),
 
-            //언어 선택
-            BodySmallText(text: 'Language select'),
-            const SizedBox(height: 7),
-            GestureDetector(
-              onTap: () => _showCountrySelection(context),
-              child: SelectButtonWidget(
-                  labelText: selectedCountry,
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.white),
-            ),
+              //언어 선택
+              BodySmallText(text: 'Language select'),
+              const SizedBox(height: 7),
+              GestureDetector(
+                onTap: () => _showCountrySelection(context),
+                child: SelectButtonWidget(
+                    labelText: selectedCountry,
+                    textColor: AppColor.primary,
+                    backgroundColor: AppColor.white),
+              ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            //화폐 선택
-            BodySmallText(text: 'Currency select'),
-            const SizedBox(height: 7),
-            GestureDetector(
-              onTap: () => _showCurrencySelection(context),
-              child: SelectButtonWidget(
-                  labelText: selectedCurrency,
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.white),
-            ),
-          ],
+              //화폐 선택
+              BodySmallText(text: 'Currency select'),
+              const SizedBox(height: 7),
+              GestureDetector(
+                onTap: () => _showCurrencySelection(context),
+                child: SelectButtonWidget(
+                    labelText: selectedCurrency,
+                    textColor: AppColor.primary,
+                    backgroundColor: AppColor.white),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: GestureDetector(

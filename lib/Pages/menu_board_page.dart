@@ -57,46 +57,49 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
               icon: SvgPicture.asset('assets/images/icons/cart.svg')),
         ],
       ),
-      body: FutureBuilder<List<MenuModel>>(
-        future: menuList,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                HeadingText(text: 'Loading Menu'),
-                BodyText(text: 'Reconfiguring menu by OCR analyzing.'),
-                BodyText(text: 'Please wait a moment.'),
-                const SizedBox(height: 20),
-                SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
-                const SizedBox(height: 20),
-                const CircularProgressIndicator(),
-              ],
-            ));
-          } else if (snapshot.hasError) {
-            return MyPadding(
-                child: Center(
-                    child: BodySemiText(text: 'Error: ${snapshot.error}')));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return MyPadding(
-                child: Center(child: BodySemiText(text: 'No data available')));
-          } else {
-            return Column(
-              children: [
-                Expanded(child: buildMenuGrid(snapshot.data!)),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => const OrderListPage());
-                  },
-                  child: const BottomButtonWidget(
-                    labelText: 'Go to Cart',
+      body: BackGround(
+        child: FutureBuilder<List<MenuModel>>(
+          future: menuList,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  HeadingText(text: 'Loading Menu'),
+                  BodyText(text: 'Reconfiguring menu by OCR analyzing.'),
+                  BodyText(text: 'Please wait a moment.'),
+                  const SizedBox(height: 20),
+                  SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(),
+                ],
+              ));
+            } else if (snapshot.hasError) {
+              return MyPadding(
+                  child: Center(
+                      child: BodySemiText(text: 'Error: ${snapshot.error}')));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return MyPadding(
+                  child:
+                      Center(child: BodySemiText(text: 'No data available')));
+            } else {
+              return Column(
+                children: [
+                  Expanded(child: buildMenuGrid(snapshot.data!)),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const OrderListPage());
+                    },
+                    child: const BottomButtonWidget(
+                      labelText: 'Go to Cart',
+                    ),
                   ),
-                ),
-              ],
-            );
-          }
-        },
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }

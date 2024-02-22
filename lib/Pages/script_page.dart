@@ -54,72 +54,76 @@ class _ScriptPageState extends State<ScriptPage> {
               icon: SvgPicture.asset('assets/images/icons/home.svg'))
         ],
       ),
-      body: FutureBuilder<ScriptModel>(
-        future: script,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                HeadingText(text: 'Loading Script'),
-                BodyText(text: 'Please wait a moment.'),
-                const SizedBox(height: 20),
-                SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
-                const SizedBox(height: 20),
-                const CircularProgressIndicator(),
-              ],
-            ));
-          } else if (snapshot.hasError) {
-            return MyPadding(
-                child: Center(
-                    child: BodySemiText(text: 'Error: ${snapshot.error}')));
-          } else if (!snapshot.hasData) {
-            return MyPadding(
-                child: Center(child: BodySemiText(text: 'No data available')));
-          } else {
-            return MyPadding(
-              child: Column(
+      body: BackGround(
+        child: FutureBuilder<ScriptModel>(
+          future: script,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        child: Transform(
-                          alignment: Alignment.bottomCenter,
-                          transform: Matrix4.rotationZ(3.1415926535),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              HeadingSmallText(text: 'Transition Script'),
-                              const SizedBox(height: 20),
-                              BodyText(text: snapshot.data!.originScript),
-                            ],
+                  HeadingText(text: 'Loading Script'),
+                  BodyText(text: 'Please wait a moment.'),
+                  const SizedBox(height: 20),
+                  SvgPicture.asset('assets/images/icons/loadingmenu.svg'),
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(),
+                ],
+              ));
+            } else if (snapshot.hasError) {
+              return MyPadding(
+                  child: Center(
+                      child: BodySemiText(text: 'Error: ${snapshot.error}')));
+            } else if (!snapshot.hasData) {
+              return MyPadding(
+                  child:
+                      Center(child: BodySemiText(text: 'No data available')));
+            } else {
+              return MyPadding(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: SizedBox(
+                          child: Transform(
+                            alignment: Alignment.bottomCenter,
+                            transform: Matrix4.rotationZ(3.1415926535),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HeadingSmallText(text: 'Transition Script'),
+                                const SizedBox(height: 20),
+                                BodyText(text: snapshot.data!.originScript),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  const Divider(),
-                  HeadingSmallText(text: 'My Language Script'),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BodyText(text: snapshot.data!.userScript),
-                        ],
+                    const Divider(),
+                    HeadingSmallText(text: 'My Language Script'),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BodyText(text: snapshot.data!.userScript),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  GestureDetector(
-                      onTap: () => Get.offAll(() => const HomePage()),
-                      child: const BottomButtonWidget(labelText: 'Good Eat!')),
-                ],
-              ),
-            );
-          }
-        },
+                    GestureDetector(
+                        onTap: () => Get.offAll(() => const HomePage()),
+                        child:
+                            const BottomButtonWidget(labelText: 'Good Eat!')),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

@@ -131,139 +131,143 @@ class _OrderListPageState extends State<OrderListPage> {
             onPressed: () => Get.back(),
             icon: SvgPicture.asset('assets/images/icons/left.svg')),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BodySemiText(text: 'Order List'),
-            GetBuilder<OrderListController>(
-              builder: (controller) {
-                return controller.isEmptyOrderList()
-                    ? MyPadding(
-                        child: Center(
-                            child: Column(
-                        children: [
-                          HeadingSmallText(text: 'Empty'),
-                          BodySemiSmallText(
-                              text: 'Please Add Menu You Want To Eat')
-                        ],
-                      )))
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: controller.orderList.length,
-                          itemBuilder: (context, index) {
-                            OrderMenuModel orderMenu =
-                                controller.orderList[index];
-                            MenuModel menu = orderMenu.menu;
-
-                            return Container(
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(top: BorderSide(width: 0.3))),
+      body: BackGround(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BodySemiText(text: 'Order List'),
+              GetBuilder<OrderListController>(
+                builder: (controller) {
+                  return controller.isEmptyOrderList()
+                      ? MyPadding(
+                          child: Center(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () => controller.deleteMenu(
-                                        controller.orderList[index]),
-                                    icon: SvgPicture.asset(
-                                        'assets/images/icons/x.svg'),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            HeadingSmallText(text: 'Empty'),
+                            BodySemiSmallText(
+                                text: 'Please Add Menu You Want To Eat')
+                          ],
+                        )))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: controller.orderList.length,
+                            itemBuilder: (context, index) {
+                              OrderMenuModel orderMenu =
+                                  controller.orderList[index];
+                              MenuModel menu = orderMenu.menu;
+
+                              return Container(
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    border:
+                                        Border(top: BorderSide(width: 0.3))),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () => controller.deleteMenu(
+                                          controller.orderList[index]),
+                                      icon: SvgPicture.asset(
+                                          'assets/images/icons/x.svg'),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          //음식 사진 및 유저이름 및 유저가격
+                                          Row(
+                                            children: [
+                                              Image.network(
+                                                menu.imageUrl,
+                                                height: 60,
+                                                width: 60,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              const SizedBox(width: 10),
+                                              //유저 음식 이름 및 가격
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  menu.userMenuName.length > 12
+                                                      ? BodyText(
+                                                          text:
+                                                              '${menu.userMenuName.substring(0, 10)}...')
+                                                      : BodyText(
+                                                          text: menu
+                                                              .userMenuName),
+                                                  BodySmallText(
+                                                      text: menu
+                                                          .userPriceWithCurrencyUnit)
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          //현지 음식 이름 및 가격
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              menu.originMenuName.length > 12
+                                                  ? BodyText(
+                                                      text:
+                                                          '${menu.originMenuName.substring(0, 10)}...')
+                                                  : BodyText(
+                                                      text:
+                                                          menu.originMenuName),
+                                              BodySmallText(
+                                                  text: menu
+                                                      .originPriceWithCurrencyUnit)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    //수량 체크
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        //음식 사진 및 유저이름 및 유저가격
-                                        Row(
-                                          children: [
-                                            Image.network(
-                                              menu.imageUrl,
-                                              height: 60,
-                                              width: 60,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            const SizedBox(width: 10),
-                                            //유저 음식 이름 및 가격
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                menu.userMenuName.length > 12
-                                                    ? BodyText(
-                                                        text:
-                                                            '${menu.userMenuName.substring(0, 10)}...')
-                                                    : BodyText(
-                                                        text:
-                                                            menu.userMenuName),
-                                                BodySmallText(
-                                                    text: menu
-                                                        .userPriceWithCurrencyUnit)
-                                              ],
-                                            ),
-                                          ],
+                                        IconButton(
+                                          onPressed: () {
+                                            controller.miunsQuantity(orderMenu);
+                                          },
+                                          icon: SvgPicture.asset(
+                                              'assets/images/icons/minus.svg'),
+                                          iconSize: 20,
                                         ),
-                                        //현지 음식 이름 및 가격
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            menu.originMenuName.length > 12
-                                                ? BodyText(
-                                                    text:
-                                                        '${menu.originMenuName.substring(0, 10)}...')
-                                                : BodyText(
-                                                    text: menu.originMenuName),
-                                            BodySmallText(
-                                                text: menu
-                                                    .originPriceWithCurrencyUnit)
-                                          ],
+                                        BodySmallText(
+                                            text: '${orderMenu.quantity}'),
+                                        IconButton(
+                                          onPressed: () {
+                                            controller.plusQuantity(orderMenu);
+                                          },
+                                          icon: SvgPicture.asset(
+                                              'assets/images/icons/plus.svg'),
+                                          iconSize: 20,
                                         ),
                                       ],
-                                    ),
-                                  ),
-                                  //수량 체크
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          controller.miunsQuantity(orderMenu);
-                                        },
-                                        icon: SvgPicture.asset(
-                                            'assets/images/icons/minus.svg'),
-                                        iconSize: 20,
-                                      ),
-                                      BodySmallText(
-                                          text: '${orderMenu.quantity}'),
-                                      IconButton(
-                                        onPressed: () {
-                                          controller.plusQuantity(orderMenu);
-                                        },
-                                        icon: SvgPicture.asset(
-                                            'assets/images/icons/plus.svg'),
-                                        iconSize: 20,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-              },
-            ),
-            const SizedBox(height: 40),
-          ],
+                                    )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                },
+              ),
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
       floatingActionButton: Get.find<OrderListController>().isEmptyOrderList()

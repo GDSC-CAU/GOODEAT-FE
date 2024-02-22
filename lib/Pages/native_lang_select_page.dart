@@ -198,38 +198,40 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
                   onPressed: () => Get.back(),
                   icon: SvgPicture.asset('assets/images/icons/left.svg'))
               : null),
-      body: MyPadding(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HeadingText(text: 'Set your Profile', color: AppColor.primary),
-            BodyText(text: 'Select your language and currency unit'),
-            const SizedBox(height: 30),
+      body: BackGround(
+        child: MyPadding(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HeadingText(text: 'Set your Profile', color: AppColor.primary),
+              BodyText(text: 'Select your language and currency unit'),
+              const SizedBox(height: 30),
 
-            //언어 선택
-            BodySmallText(text: 'Language select'),
-            const SizedBox(height: 7),
-            GestureDetector(
-              onTap: () => _showCountrySelection(context),
-              child: SelectButtonWidget(
-                  labelText: selectedCountry,
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.white),
-            ),
+              //언어 선택
+              BodySmallText(text: 'Language select'),
+              const SizedBox(height: 7),
+              GestureDetector(
+                onTap: () => _showCountrySelection(context),
+                child: SelectButtonWidget(
+                    labelText: selectedCountry,
+                    textColor: AppColor.primary,
+                    backgroundColor: AppColor.white),
+              ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            //화폐 선택
-            BodySmallText(text: 'Currency select'),
-            const SizedBox(height: 7),
-            GestureDetector(
-              onTap: () => _showCurrencySelection(context),
-              child: SelectButtonWidget(
-                  labelText: selectedCurrency,
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.white),
-            ),
-          ],
+              //화폐 선택
+              BodySmallText(text: 'Currency select'),
+              const SizedBox(height: 7),
+              GestureDetector(
+                onTap: () => _showCurrencySelection(context),
+                child: SelectButtonWidget(
+                    labelText: selectedCurrency,
+                    textColor: AppColor.primary,
+                    backgroundColor: AppColor.white),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: GestureDetector(

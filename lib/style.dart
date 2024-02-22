@@ -8,4 +8,5 @@ class AppColor extends Color {
   static const secondary = Color(0xFF9BA5B7);
   static const point = Color(0xFFFF4A4A);
   static const tertiary = Color(0xFFEEF1F4);
+  static const background = Color(0xFFFFEBF0);
 }
