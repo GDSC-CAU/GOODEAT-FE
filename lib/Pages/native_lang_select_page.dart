@@ -235,7 +235,6 @@ class _NativeLanguageSelectState extends State<NativeLanguageSelect> {
       floatingActionButton: GestureDetector(
         onTap: () {
           _submitCountryAndCurrency(context);
-          Get.back();
         },
         child: const BottomButtonWidget(
           labelText: 'Complete Setting',

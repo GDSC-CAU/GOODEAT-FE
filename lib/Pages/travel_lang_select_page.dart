@@ -235,7 +235,6 @@ class _TravelLanguageSelectPageState extends State<TravelLanguageSelectPage> {
       floatingActionButton: GestureDetector(
         onTap: () {
           _submitCountryAndCurrency(context);
-          Get.back();
         },
         child: const BottomButtonWidget(
           labelText: 'Complete Setting',

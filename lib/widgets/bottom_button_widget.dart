@@ -15,7 +15,7 @@ class BottomButtonWidget extends StatelessWidget {
       Color? backgroundColor,
       SvgPicture? icon})
       : textColor = textColor ?? AppColor.white,
-        backgroundColor = backgroundColor ?? AppColor.primary;
+        backgroundColor = backgroundColor ?? AppColor.point;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class BottomSmallButtonWidget extends StatelessWidget {
       Color? backgroundColor,
       SvgPicture? icon})
       : textColor = textColor ?? AppColor.white,
-        backgroundColor = backgroundColor ?? AppColor.primary;
+        backgroundColor = backgroundColor ?? AppColor.point;
 
   @override
   Widget build(BuildContext context) {
