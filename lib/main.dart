@@ -6,6 +6,7 @@ import 'package:goodeat_frontend/Pages/native_lang_select_page.dart';
 import 'package:goodeat_frontend/controller/my_country_currency_controller.dart';
 import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/pages/home_page.dart';
+import 'package:goodeat_frontend/style.dart';
 
 void main() async {
   await dotenv.load(fileName: 'assets/config/.env');
@@ -17,13 +18,13 @@ class GoodEat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: 'GOODEAT',
-      // theme: ThemeData(
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
-      home: CheckStorage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.background),
+        useMaterial3: true,
+      ),
+      home: const CheckStorage(),
     );
   }
 }
