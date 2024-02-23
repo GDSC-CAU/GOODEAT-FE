@@ -25,11 +25,10 @@ class _OrderListPageState extends State<OrderListPage> {
   Future<TotalPriceModel> getPrice() async {
     List<OrderMenuModel> orderMenuList =
         Get.find<OrderListController>().orderList;
-    String originLanguageName =
-        Get.find<MyCountryCurrencyController>().myCurrency;
-    String userLanguageName = Get.find<TravelController>().travelCurrency;
+    String originCurrency = Get.find<TravelController>().travelCurrency;
+    String userCurrency = Get.find<MyCountryCurrencyController>().myCurrency;
     TotalPriceModel price = await ApiService.postOrderAndGetRecipt(
-        orderMenuList, originLanguageName, userLanguageName);
+        orderMenuList, originCurrency, userCurrency);
     return price;
   }
 
