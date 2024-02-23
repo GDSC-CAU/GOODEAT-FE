@@ -264,7 +264,7 @@ class _OrderListPageState extends State<OrderListPage> {
                         );
                 },
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 70),
             ],
           ),
         ),
