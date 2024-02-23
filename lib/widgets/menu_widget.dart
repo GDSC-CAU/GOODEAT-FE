@@ -10,8 +10,6 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      width: 135,
-      height: 250,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -40,7 +38,7 @@ class MenuWidget extends StatelessWidget {
                   : BodySmallText(text: menu.originMenuName),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 2),
           // 가격 표시
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
