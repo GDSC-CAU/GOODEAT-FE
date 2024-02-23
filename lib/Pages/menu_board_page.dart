@@ -108,7 +108,7 @@ class _MenuBoardPageState extends State<MenuBoardPage> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 3 / 4,
+        childAspectRatio: 0.77,
       ),
       itemCount: menuList.length,
       itemBuilder: (BuildContext context, int index) {
