@@ -53,7 +53,6 @@ class _HomePageState extends State<HomePage> {
         child: MyPadding(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //로고
@@ -69,9 +68,13 @@ class _HomePageState extends State<HomePage> {
                 onTap: () => Get.to(
                     () => const TravelLanguageSelectPage(fromHomeScreen: true)),
                 child: Container(
-                  width: 285,
-                  color: AppColor.white,
+                  width: 300,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.1),
                   padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(15)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,9 +129,13 @@ class _HomePageState extends State<HomePage> {
                 onTap: () => Get.to(
                     () => const NativeLanguageSelect(fromHomeScreen: true)),
                 child: Container(
-                  width: 285,
-                  color: AppColor.white,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.1),
+                  width: 300,
                   padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(15)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
