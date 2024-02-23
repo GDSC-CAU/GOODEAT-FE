@@ -60,7 +60,6 @@ class _ScriptPageState extends State<ScriptPage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   HeadingText(text: 'Loading Script'),
                   BodyText(text: 'Please wait a moment.'),
@@ -81,18 +80,19 @@ class _ScriptPageState extends State<ScriptPage> {
             } else {
               return MyPadding(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: SingleChildScrollView(
-                        child: SizedBox(
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: SingleChildScrollView(
                           child: Transform(
-                            alignment: Alignment.bottomCenter,
-                            transform: Matrix4.rotationZ(3.1415926535),
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationZ(3.141592),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HeadingSmallText(text: 'Transition Script'),
-                                const SizedBox(height: 20),
+                                Container(height: 20),
                                 BodyText(text: snapshot.data!.originScript),
                               ],
                             ),
@@ -100,19 +100,24 @@ class _ScriptPageState extends State<ScriptPage> {
                         ),
                       ),
                     ),
-                    const Divider(),
-                    HeadingSmallText(text: 'My Language Script'),
+                    const SizedBox(height: 10),
+                    Column(
+                      children: [
+                        Transform(
+                            alignment: Alignment.center,
+                            transform: Matrix4.rotationZ(3.1415926535),
+                            child: HeadingSmallText(text: 'Transition Script')),
+                        const Divider(),
+                        HeadingSmallText(text: 'My Language Script'),
+                      ],
+                    ),
                     const SizedBox(height: 10),
                     Expanded(
                       child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            BodyText(text: snapshot.data!.userScript),
-                          ],
-                        ),
+                        child: BodyText(text: snapshot.data!.userScript),
                       ),
                     ),
+                    const SizedBox(height: 10),
                     GestureDetector(
                         onTap: () => Get.offAll(() => const HomePage()),
                         child:
