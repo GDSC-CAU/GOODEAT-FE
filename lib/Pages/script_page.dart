@@ -8,7 +8,6 @@ import 'package:goodeat_frontend/controller/travel_controller.dart';
 import 'package:goodeat_frontend/models/order_menu_model.dart';
 import 'package:goodeat_frontend/models/script_model.dart';
 import 'package:goodeat_frontend/services/lang_currency.dart';
-import 'package:goodeat_frontend/style.dart';
 import 'package:goodeat_frontend/widgets/bottom_button_widget.dart';
 import 'package:goodeat_frontend/widgets/layout_widget.dart';
 import 'package:goodeat_frontend/widgets/text_widgets.dart';
